@@ -1,0 +1,8 @@
+<h1>Speaker diarization</h1>
+<div class="process_one_container">
+    <input type="file">
+    <button (click)="startProcess()">first process</button>
+    <div *ngIf="showResults" class="results_one"><a target="_self" href="../assets/file_example_XLS_10.xls">Link1</a></div>
+    <button  *ngIf="showResults" (click)="startSecondProcess(file)">second process</button>
+    <div *ngIf="showResults2" class="results_one"><a target="_self" href="../assets/file_example_XLS_10.xls">Link2</a></div>
+</div>
