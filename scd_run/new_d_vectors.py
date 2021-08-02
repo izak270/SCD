@@ -10,9 +10,11 @@ from hparam import hparam as hp
 from VAD_segments import VAD_chunk
 from speech_embedder_net import SpeechEmbedder
 
-PATH = "/home/user/IdeaProjects/libonea/demos/SCD/ICSI_Dataset/"
+# TODO: talk with other groups about files addresses & data saving conv
+# TODO: change addresses
+PATH = ""
 
-WAV_PATH = "Data/Signals/"
+WAV_PATH = ""
 
 W2V_VECTOR_LENGTH = 768
 
@@ -123,8 +125,9 @@ def get_half_embedding(segment_start, segment_end, the_wav):
 
 
 def create_vectors(df, w2v):
-    vectors_pkl = pd.DataFrame(index=range(len(df)), columns=range(1, 2 * W2V_VECTOR_LENGTH +
-                                                                   2 * SPEECH_EMBEDDING_DIMENSION + 17))
+    #TODO: change size of df! Changed to vector+2 for start/end time
+    vectors_pkl = pd.DataFrame(index=range(len(df)), columns=range(1, W2V_VECTOR_LENGTH +
+                                                                   SPEECH_EMBEDDING_DIMENSION + 2))
     random = 0
 
     last_seen_file_id = ""
@@ -138,14 +141,14 @@ def create_vectors(df, w2v):
 
             # /////////////////////////////first_vec = np.zeros(W2V_VECTOR_LENGTH)
 
-            t_Label = df.iloc[i]["Label"]
+            #t_Label = df.iloc[i]["Label"]
 
-            first_sent = list(df.iloc[i][1:4])
+            #first_sent = list(df.iloc[i][1:4])
 
             while i < range(len(df)) and df.iloc[i]["Label"] != "Split":
                 i += 1
 
-            #           todo label no ok
+            # TODO: change labels as Mano & Revital saving it
 
             seg_start_first = df.iloc[index_label]["Start_Time"]
             seg_end_first = df.iloc[i]["End_Time"]
@@ -186,19 +189,20 @@ def create_vectors(df, w2v):
             # speech embedding for first half of the sliding window
             # seg_start_first = df.iloc[i]["Segment_Start"]
             # seg_end_first = df.iloc[i]["Segment_End"]
+            #TODO: it's more than one "last_seen_wav_file" How data saved? Is it splited to many wav files or wav file its one record?
             avg_vector_first = get_half_embedding(seg_start_first, seg_end_first, last_seen_wav_file)
 
-            nlp_end_index = (i - index_label) * W2V_VECTOR_LENGTH
+            #nlp_end_index = (i - index_label) * W2V_VECTOR_LENGTH
+            nlp_end_index = W2V_VECTOR_LENGTH
 
             vectors_pkl.iloc[i][nlp_end_index: nlp_end_index + SPEECH_EMBEDDING_DIMENSION] = avg_vector_first
-            vectors_pkl.iloc[i][nlp_end_index + SPEECH_EMBEDDING_DIMENSION:
-                                nlp_end_index + 2 * SPEECH_EMBEDDING_DIMENSION] = avg_vector_second
+            #vectors_pkl.iloc[i][nlp_end_index + SPEECH_EMBEDDING_DIMENSION:
+            #                    nlp_end_index + 2 * SPEECH_EMBEDDING_DIMENSION] = avg_vector_second
 
-            meta_data_start_index = nlp_end_index + 2 * SPEECH_EMBEDDING_DIMENSION
+            meta_data_start_index = nlp_end_index + SPEECH_EMBEDDING_DIMENSION
 
             vectors_pkl.iloc[i][meta_data_start_index + 1] = seg_start_first
             vectors_pkl.iloc[i][meta_data_start_index + 2] = seg_end_first
-            vectors_pkl.iloc[i][meta_data_start_index + 3] = avg_vector_first
 
             '''
             vectors_pkl.iloc[i][meta_data_start_index + 3] = df.iloc[i]["Third_Duration"]
@@ -233,6 +237,7 @@ embedder_net = SpeechEmbedder()
 embedder_net.load_state_dict(torch.load(hp.model.model_path))
 embedder_net.eval()
 
+# TODO: change addresses
 data_df = pd.read_pickle(PATH + "Pickles/raw_data_2_convert_2_embeddings.pkl")
 
 id_list = sorted(list(set(list(data_df["ID"]))))
@@ -243,5 +248,5 @@ word2vec = pd.read_pickle(PATH + 'Models/Word2Vec/bert_w2v_dictionary.pkl')
 for curr_id in id_list:
     sub_df = data_df[data_df["ID"] == curr_id]
     curr_data = create_vectors(sub_df, word2vec)
-    pd.to_pickle(curr_data, PATH + "Pickles/vec/prepared_vectors_2_split-" + str(curr_id) + ".pkl")
+    pd.to_pickle(curr_data, PATH + "Pickles/vec/prepared_vectors" + str(curr_id) + ".pkl")
 pass
