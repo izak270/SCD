@@ -4,7 +4,7 @@ import pandas as pd
 import xml.etree.ElementTree as ET
 
 
-fixPATH = "/home/imanuel/Documents/SCD/ICSI_Dataset/"
+PATH = "/home/imanuel/Documents/SCD/ICSI_Dataset/"
 
 
 class WordObject:
