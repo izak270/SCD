@@ -2,7 +2,7 @@ import itertools
 import pandas as pd
 
 
-PATH = "/home/user/IdeaProjects/libonea/demos/SCD/ICSI_Dataset/"
+PATH = "/home/imanuel/Documents/SCD/ICSI_Dataset/"
 
 
 class WordObject:
@@ -14,22 +14,22 @@ class WordObject:
         self.speaker = speaker
 
 
-raw_data = pd.read_pickle(PATH + "Pickles/files_df.pkl")
+raw_data = pd.read_pickle(PATH + "Pickles/files_df.pkl") # from pickle to list of lists
 
-general_df = pd.DataFrame(columns=["ID", "Word", "From", "To", "Speaker"])
+general_df = pd.DataFrame(columns=["ID", "Word", "From", "To", "Speaker"]) # initialize new data frame object with the specified column names
 
 count = 0
-size = len(raw_data.keys())
+size = len(raw_data.keys()) # key is the file name. size is how many files we have in the dictionary
 
 for file_key in raw_data.keys():
 
-    speakers_value = raw_data[file_key]
-    concatenated_speakers_list = sum(speakers_value, [])
-    concatenated_speakers_list = sorted(concatenated_speakers_list, key=lambda x: x.start_time, reverse=False)
+    speakers_value = raw_data[file_key] # get all values of current file
+    concatenated_speakers_list = sum(speakers_value, []) # get one list - which is the sum of all lists
+    concatenated_speakers_list = sorted(concatenated_speakers_list, key=lambda x: x.start_time, reverse=False) # sort the list by the start time
 
     curr_file_df = pd.DataFrame(index=range(len(concatenated_speakers_list)),
                                 columns=["ID", "Word", "From", "To", "Speaker"])
-
+# initialize a data frame and iterate over the concatenated list and add the value to the data frame
     for i in range(len(concatenated_speakers_list)):
         word_obj = concatenated_speakers_list[i]
 
@@ -40,13 +40,13 @@ for file_key in raw_data.keys():
         curr_file_df["Speaker"].iloc[i] = word_obj.speaker
 
     count += 1
-    general_df = pd.concat([general_df, curr_file_df], ignore_index=True)
+    general_df = pd.concat([general_df, curr_file_df], ignore_index=True) # add the current file data frame to the general data frame
     print("Done " + str(count) + " files, out of: " + str(size))
 
-print("Original Length: " + str(len(general_df)))
-general_df = general_df.dropna()
+print("Original Length: " + str(len(general_df))) # print the length of the general data frame - all inserted files
+general_df = general_df.dropna()#dropna = drop not available
 print("After dropna Length: " + str(len(general_df)))
 
-pd.to_pickle(general_df, PATH + "Pickles/general_df_4_all_files.pkl")
+pd.to_pickle(general_df, PATH + "Pickles/general_df_4_all_files.pkl") # from data frame to pickle
 
 pass
