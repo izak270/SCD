@@ -138,11 +138,8 @@ def create_vectors(df, w2v):
             file_id = df.iloc[i]["ID"]
 
             # NLP embedding for first half of the sliding window
-
             # /////////////////////////////first_vec = np.zeros(W2V_VECTOR_LENGTH)
-
             #t_Label = df.iloc[i]["Label"]
-
             #first_sent = list(df.iloc[i][1:4])
 
             while i < range(len(df)) and df.iloc[i]["Label"] != "Split":
