@@ -12,9 +12,9 @@ from speech_embedder_net import SpeechEmbedder
 
 # TODO: talk with other groups about files addresses & data saving conv
 # TODO: change addresses
-PATH = "/content/drive/MyDrive/SCD/ICSI_Dataset/"
-PICKLE_PATH = "Pickles/Bed003.pkl"
-WAV_PATH = "Signals/Bed003/"
+PATH = "/home/itzhak/SCD/"
+PICKLE_PATH = "Pickles/Bed003_with_labels.pkl"
+WAV_PATH = "Signals/"
 WAV_NAME = "Bed003.interaction.wav"
 
 FINALE_PICKLE_NAME = "RON_OLGA"
@@ -166,16 +166,17 @@ def create_vectors(df):
     return vectors_pkl
 
 
-#def run_D_vectors():
+def run_D_vectors():
+    data_df = pd.read_pickle(PATH + PICKLE_PATH)
+    curr_data = create_vectors(data_df)
+    pd.to_pickle(curr_data, PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
+    data_df2 = pd.read_pickle(PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
+    print(data_df2.to_string())
+
+
 embedder_net = SpeechEmbedder()
 embedder_net.load_state_dict(torch.load(hp.model.model_path))
 embedder_net.eval()
-data_df = pd.read_pickle(PATH + PICKLE_PATH)
-curr_data = create_vectors(data_df)
-pd.to_pickle(curr_data, PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
-data_df2 = pd.read_pickle(PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
-print(data_df2.to_string())
-
 
 
 
