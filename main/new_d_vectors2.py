@@ -131,7 +131,8 @@ def create_vectors(df):
     #vectors_pkl = pd.DataFrame(index=range(len(df)), columns=range(4))
     random = 0
     j=-1
-    size = 60
+    # size = 60
+    size = len(df)
     vectors_pkl = pd.DataFrame(index = range(size), columns=["From", "To", "Vectors"])
     index_label = 0
     last_seen_wav_file = AudioSegment.from_wav(PATH + WAV_PATH + WAV_NAME)
