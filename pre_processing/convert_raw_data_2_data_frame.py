@@ -2,7 +2,7 @@ import itertools
 import pandas as pd
 
 
-PATH = "/home/user/IdeaProjects/libonea/demos/SCD/ICSI_Dataset/"
+PATH = "/home/itzhak/SCD/"
 
 
 class WordObject:
@@ -14,7 +14,7 @@ class WordObject:
         self.speaker = speaker
 
 
-raw_data = pd.read_pickle(PATH + "Pickles/files_df.pkl")
+raw_data = pd.read_pickle(PATH + "Pickles/Bed003_with_labels.pkl")
 
 general_df = pd.DataFrame(columns=["ID", "Word", "From", "To", "Speaker"])
 

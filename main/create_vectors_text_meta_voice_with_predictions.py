@@ -12,6 +12,7 @@ from pathlib import Path
 from hparam import hparam as hp
 from VAD_segments import VAD_chunk
 from speech_embedder_net import SpeechEmbedder
+from hybrid_bert_nn_definition import HybridSCDModel
 
 
 PATH = "/home/itzhak/SCD/"
