@@ -10,12 +10,19 @@ export class HttpService {
   private baseUrl: string;
 
   constructor(private http: HttpClient) {
-    this.baseUrl = 'api/';
+    this.baseUrl = '';
   }
 
   public PostFirstProcess(file: any) {
+  let headers = new HttpHeaders({'FileName': 'asd'})
+
     console.log('serve');
-    return this.http.post(this.baseUrl + 'v1/google-ads/customer_list', file)
+    console.log(typeof(file))
+    const formData = new FormData();
+    formData.append("file", file,'myfile');
+    return this.http.post(this.baseUrl + 'audio_file', formData,{headers,observe:'events'})
+//     return this.http.get(this.baseUrl + 'helloworld', file)
+
   }
 
   public postSecondProcess(file: any, option: any) {
@@ -23,7 +30,7 @@ export class HttpService {
     // formData.append("file", file, 'file.name');
     console.log('sec');
     console.log(file);
-    return this.http.post(this.baseUrl + 'v1/google-ads/customer_list', 
+    return this.http.post(this.baseUrl + 'v1/google-ads/customer_list',
       file, {headers : new HttpHeaders({ 'Content-Type': 'image/jpeg','enctype': 'multipart/form-data' })}
     )
   }

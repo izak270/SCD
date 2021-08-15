@@ -22,13 +22,15 @@ export class AppComponent implements OnInit {
     })
   }
   onFileSelected(file: any) {
-    this.file = file;
+  console.log('filechan')
+    this.file = file.files[0];
     // WshShell.Run("../app/files-from-server/file_example_XLS_10.xls", 1, false);
   }
 
   startProcess() {
     // if (this.file) {
-      this.httpService.PostFirstProcess('pointId').subscribe(data => {
+   console.log(this.file,typeof(this.file))
+      this.httpService.PostFirstProcess(this.file).subscribe(data => {
         console.log(data);
         this.showResults = true;
       })
@@ -45,7 +47,7 @@ export class AppComponent implements OnInit {
     // var form_data = new FormData();
     // form_data.append('file', file1)
     // console.log(file1);
-    
+
     // let formData:FormData = new FormData();
     // formData.append('uploadFile', file1, 'file1.name');
     // let headers = new HttpHeaders({
@@ -55,11 +57,11 @@ export class AppComponent implements OnInit {
   //   let options = {
   //     headers: headers
   //  }
-    
-    
+
+
     // this.httpService.postSecondProcess(formData, options).subscribe(data => {
     //   console.log(data);
-    // })                                                                                                                                                                                                                                                                
+    // })
   }
 }
 
