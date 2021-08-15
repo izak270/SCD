@@ -11,9 +11,10 @@ from VAD_segments import VAD_chunk
 from speech_embedder_net import SpeechEmbedder
 
 
-PATH = "/home/user/IdeaProjects/libonea/demos/SCD/ICSI_Dataset/"
+PATH = "/home/itzhak/SCD/"
 
-WAV_PATH = "Data/Signals/"
+
+WAV_PATH = "Signals/"
 
 W2V_VECTOR_LENGTH = 768
 
@@ -175,7 +176,7 @@ def create_vectors(df, w2v):
             if file_id != last_seen_file_id:
                 last_seen_file_id = file_id
                 last_seen_wav_file = AudioSegment.from_wav(PATH + WAV_PATH +
-                                                           str(file_id) + "/" + str(file_id) + ".interaction.wav")
+                                                          "/" + str(file_id) + ".interaction.wav")
 
             # speech embedding for first half of the sliding window
             seg_start_first = df.iloc[i]["Segment_Start"]
