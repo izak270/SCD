@@ -33,5 +33,19 @@
    <w nite:id="Bed003.w.385" starttime="" endtime="144.09" c="APOSS">'s</w>
    <w nite:id="Bed003.w.386" starttime="144.09" endtime="144.36" c="W">about</w>
    <w nite:id="Bed003.w.387" starttime="144.36" endtime="144.44" c="W">you</w>
+   <w nite:id="Bed003.w.388" starttime="144.44" endtime="144.53" c="W">have</w>
+   <w nite:id="Bed003.w.389" starttime="144.53" endtime="144.69" c="W">to</w>
+   <pause nite:id="Bed003.pause.10" starttime="144.69" endtime="144.84"/>
+   <w nite:id="Bed003.w.390" starttime="144.84" endtime="145.09" c="W">click</w>
+   <w nite:id="Bed003.w.391" starttime="145.09" endtime="145.22" c="W">on</w>
+   <w nite:id="Bed003.w.392" starttime="145.22" endtime="145.34" c="W">the</w>
+   <w nite:id="Bed003.w.393" starttime="145.34" endtime="145.59" c="W">little</w>
+   <pause nite:id="Bed003.pause.11" starttime="145.59" endtime="145.98"/>
+   <w nite:id="Bed003.w.394" starttime="145.98" endtime="146.15" c="W">light</w>
+   <w nite:id="Bed003.w.395" starttime="146.21" endtime="146.42" c="W">bulb</w>
+   <w nite:id="Bed003.w.396" starttime="146.42" endtime="146.42" c=".">.</w>
+   <w nite:id="Bed003.w.423" starttime="151.93" endtime="152.0" c="W">It</w>
+   <w nite:id="Bed003.w.424" starttime="152.0" endtime="152.39" c="W">opens</w>
+   <w nite:id="Bed003.w.425" starttime="152.39" endtime="152.53" c="W">the</w>
    <comment nite:id="Bed003.comment.35" starttime="" endtime="" description="while laughing"/>
 </nite:root>
