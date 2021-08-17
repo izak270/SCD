@@ -3,6 +3,7 @@ import torch
 import librosa
 import numpy as np
 import pandas as pd
+import  time
 from pydub import AudioSegment
 from time import gmtime, strftime
 
@@ -171,9 +172,9 @@ def run_D_vectors():
     data_df = pd.read_pickle(PATH + PICKLE_PATH)
     curr_data = create_vectors(data_df)
     pd.to_pickle(curr_data, PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
-    data_df2 = pd.read_pickle(PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
-    print(data_df2.to_string())
-
+    # data_df2 = pd.read_pickle(PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
+    # print(data_df2.to_string())
+    return
 
 embedder_net = SpeechEmbedder()
 embedder_net.load_state_dict(torch.load(hp.model.model_path))

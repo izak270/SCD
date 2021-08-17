@@ -3,6 +3,8 @@ import torch
 import librosa
 import numpy as np
 import pandas as pd
+import xlsxwriter
+
 from pydub import AudioSegment
 from time import gmtime, strftime
 
@@ -309,6 +311,24 @@ def create_vectors(df, w2v):
             curr_y_pred.append(prediction_class)
             curr_y_true.append(true_class)
 
+    fileName = PATH + "main/Data_Frame_WithLabels.xlsx"
+    workbook = xlsxwriter.Workbook(fileName)
+    worksheet = workbook.add_worksheet()
+    bold = workbook.add_format({'bold': True})
+    worksheet.set_column(0, 4, 15)
+
+    worksheet.write(0, 0, "Word", bold)
+    worksheet.write(0, 1, "Start Time", bold)
+    worksheet.write(0, 2, "End Time", bold)
+    worksheet.write(0, 3, "Label", bold)
+
+    for k in range(len(all_words_with_predictions)):
+        for j in range(0, 4):
+            print(all_words_with_predictions.iloc[k][j])
+            worksheet.write((k + 1), j, all_words_with_predictions.iloc[k][j])
+
+    workbook.close()
+    return vectors_pkl
     pd.to_pickle(all_words_with_predictions, PATH + "Pickles/"+file_id+"_with_labels"+".pkl")
     return vectors_pkl
 

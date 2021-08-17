@@ -1,11 +1,11 @@
-
+import xlsxwriter
 from sklearn.cluster import KMeans
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 from matplotlib import pyplot as plt
 from kneed import KneeLocator
 import math
-
+PATH = "/home/itzhak/SCD/"
 df = pd.read_pickle('vector_olga_ron.pkl')
 print(df)
 df.head()
@@ -43,4 +43,24 @@ gf3['start']=start
 gf3['finish']=finish
 print(gf3,'ypredi')
 
+fileName = PATH + "main/Data_Frame_WithLabels2.xlsx"
+workbook = xlsxwriter.Workbook(fileName)
+worksheet = workbook.add_worksheet()
+bold = workbook.add_format({'bold': True})
+worksheet.set_column(0, 3, 15)
 
+worksheet.write(0, 0, "cluster", bold)
+worksheet.write(0, 1, "Start Time", bold)
+worksheet.write(0, 2, "End Time", bold)
+
+for k in range(0, len(gf3)):
+    worksheet.write((k + 1), 0, gf3.iloc[k]['cluster'])
+    worksheet.write((k + 1), 1, gf3.iloc[k]['start'])
+    worksheet.write((k + 1), 2, gf3.iloc[k]['finish'])
+    # for j in range(0, 3):
+    #     size = len(gf3.columns)+j-3
+    #     print(size,'len')
+    #     print(gf3.iloc[k][size],'test')
+    #     worksheet.write((k + 1), j, gf3.iloc[k][len(gf3.columns)+j-6])
+
+workbook.close()
