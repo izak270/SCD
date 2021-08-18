@@ -16,24 +16,28 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.httpService.PostFirstProcess('pointId').subscribe(data => {
-      console.log(data);
+    console.log('in')
 
-    })
   }
   onFileSelected(file: any) {
   console.log('filechan')
     this.file = file.files[0];
+    this.startProcess()
     // WshShell.Run("../app/files-from-server/file_example_XLS_10.xls", 1, false);
   }
 
   startProcess() {
     // if (this.file) {
-   console.log(this.file,typeof(this.file))
-      this.httpService.PostFirstProcess(this.file).subscribe(data => {
-        console.log(data);
-        this.showResults = true;
-      })
+   console.log('startProcess')
+      this.httpService.PostFirstProcess(this.file).subscribe((response) => {
+       console.log(response)
+        const url = window.URL.createObjectURL(new Blob([response]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'template.xlsx');
+        document.body.appendChild(link);
+        link.click();
+    })
     // } else {
       // alert('please select file')
     // }
