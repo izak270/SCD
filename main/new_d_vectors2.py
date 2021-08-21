@@ -126,15 +126,23 @@ def get_half_embedding(segment_start, segment_end, the_wav):
     avg_vector = avg_vector / len(voice_embedding_vectors)
 
     return avg_vector
+	
+def get_size(df):
 
+    counter = 0;
+    for i in range(len(df)):
+       if df.iloc[i]["Label"] == "Split":
+         counter= counter+1   
+    return (counter+1)
+	
 
 def create_vectors(df):
     #vectors_pkl = pd.DataFrame(index=range(len(df)), columns=range(4))
     random = 0
     j=-1
-    # size = 60
+    segments_size = get_size()
     size = len(df)
-    vectors_pkl = pd.DataFrame(index = range(size), columns=["From", "To", "Vectors"])
+    vectors_pkl = pd.DataFrame(index = range(segments_size), columns=["From", "To", "Vectors"])
     index_label = 0
     last_seen_wav_file = AudioSegment.from_wav(PATH + WAV_PATH + WAV_NAME)
     for i in range(size):
@@ -166,6 +174,33 @@ def create_vectors(df):
     print("Random Vectors: " + str(random))
 
     return vectors_pkl
+	
+def create_vectors_excel():
+
+  data_df2 = pd.read_pickle(PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
+  fileName = PATH + "/Excels/Segments_vectors_Ron_Olga.xlsx"
+  workbook = xlsxwriter.Workbook(fileName)
+  worksheet = workbook.add_worksheet()
+  bold = workbook.add_format({'bold': True})
+  worksheet.set_column(0, 260, 15)
+
+  worksheet.write(0, 0, "Index", bold)
+  worksheet.write(0, 1, "Start Segment", bold)
+  worksheet.write(0, 2, "Segment End", bold)
+
+  for k in range(3,259):
+      worksheet.write(0, k, "vector_" + str(k-3), bold)
+
+  for k in range(len(data_df2)):
+        worksheet.write((k + 1), 0, k)
+        worksheet.write((k + 1), 1, data_df2.iloc[k]["From"])
+        worksheet.write((k + 1), 2, data_df2.iloc[k]["To"])
+        vector_array = data_df2.iloc[k]["Vectors"]
+        if not isinstance(vector_array, float):
+          for j in range (len(vector_array)):
+            worksheet.write((k + 1), (j+3), str(vector_array[j]))
+  workbook.close()
+  return	
 
 
 def run_D_vectors():
@@ -174,6 +209,7 @@ def run_D_vectors():
     data_df = pd.read_pickle(PATH + PICKLE_PATH)
     data_df = pd.read_pickle(PATH + PICKLE_PATH)
     curr_data = create_vectors(data_df)
+	#create_vectors_excel()
 	print("Done - second component - file was saved in:" + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
     pd.to_pickle(curr_data, PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
     # data_df2 = pd.read_pickle(PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
