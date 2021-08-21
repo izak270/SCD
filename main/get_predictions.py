@@ -124,7 +124,10 @@ def get_predictions(general_df, words_vectors):
 
     for k in range(len(all_words_with_predictions)):
         for j in range(0, 5):
-            worksheet.write((k + 1), j, all_words_with_predictions.iloc[k][j])
+			try: 
+				worksheet.write((k + 1), j, all_words_with_predictions.iloc[k][j])
+			except:
+				pass
 
 	print("Created All_Words_With_Speaker_And_Label.xlsx in Excels folder - all words with true speaker and predicted label")
     workbook.close()
