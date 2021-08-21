@@ -78,7 +78,9 @@ def convert_origin_2_raw_data():
   return
 
 def convert_raw_data_2_data_frame():
-  print("start with raw data")
+
+  print("Start to concatenate all files to 1 data set")
+  
   raw_data = pd.read_pickle(PATH + "Pickles/files_df.pkl") # from pickle to list of lists
 
   general_df = pd.DataFrame(columns=["ID", "Word", "From", "To", "Speaker"]) # initialize new data frame object with the specified column names
@@ -129,7 +131,7 @@ def convert_raw_data_2_data_frame():
   workbook.close()  
 
   pd.to_pickle(general_df, PATH + "Pickles/general_df_4_all_files.pkl") # from data frame to pickle
-  print("Finish with raw data")
+  print("Done - 1 data set")
   return
 
 def convert_df_2_pkl():
