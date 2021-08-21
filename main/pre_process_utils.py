@@ -128,8 +128,9 @@ def convert_raw_data_2_data_frame():
   for k in range(len(general_df)):
       for j in range(0, 5):
           worksheet.write((k + 1), j, general_df.iloc[k][j])
-  workbook.close()  
-
+  workbook.close() 
+  
+  print("Created current_run_all_words_and_speakers.xlsx in Excels folder - contains all words and the true speakers")
   pd.to_pickle(general_df, PATH + "Pickles/general_df_4_all_files.pkl") # from data frame to pickle
   print("Done - 1 data set")
   return
