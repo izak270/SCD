@@ -140,7 +140,7 @@ def create_vectors(df):
     #vectors_pkl = pd.DataFrame(index=range(len(df)), columns=range(4))
     random = 0
     j=-1
-    segments_size = get_size()
+    segments_size = get_size(df)
     size = len(df)
     vectors_pkl = pd.DataFrame(index = range(segments_size), columns=["From", "To", "Vectors"])
     index_label = 0
