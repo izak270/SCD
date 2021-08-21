@@ -108,7 +108,7 @@ def convert_raw_data_2_data_frame():
 
       count += 1
       general_df = pd.concat([general_df, curr_file_df], ignore_index=True) # add the current file data frame to the general data frame
-      print("Done " + str(count) + " files, out of: " + str(size))
+     
 
   print("Original Length: " + str(len(general_df))) # print the length of the general data frame - all inserted files
   general_df = general_df.dropna()#dropna = drop not available
