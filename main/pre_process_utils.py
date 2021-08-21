@@ -19,6 +19,9 @@ class WordObject:
         self.speaker = speaker
 
 def convert_origin_2_raw_data():
+  
+  print("Starting to read xml files...")
+  
   os.chdir(PATH + "words") #current path
   all_file_name = glob.glob("*.xml")# returns a list of all files that matches the "*.xml" pattern
   all_file_name.sort(key=lambda x: os.path.getmtime(x)) # sort the files by the time they were last changed
@@ -69,7 +72,9 @@ def convert_origin_2_raw_data():
           files_set[file_id].append(file_words)
 # files_set is a dictionary of file names = keys and lists where the list are all words as objects (id, start, end, word)
   pd.to_pickle(files_set, PATH + "Pickles/files_df.pkl") # from list of lists to pickle file
-  print("Finish with origin")
+  
+  print("Done with xml files processing.")
+  
   return
 
 def convert_raw_data_2_data_frame():
