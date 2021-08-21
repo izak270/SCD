@@ -7,6 +7,7 @@ import  time
 from pydub import AudioSegment
 from time import gmtime, strftime
 import xlsxwriter
+import math
 
 from hparam import hparam as hp
 from VAD_segments import VAD_chunk
@@ -141,28 +142,39 @@ def create_vectors(df):
     #vectors_pkl = pd.DataFrame(index=range(len(df)), columns=range(4))
     random = 0
     j=-1
+    # size = 60
     segments_size = get_size(df)
     size = len(df)
     vectors_pkl = pd.DataFrame(index = range(segments_size), columns=["From", "To", "Vectors"])
     index_label = 0
     last_seen_wav_file = AudioSegment.from_wav(PATH + WAV_PATH + WAV_NAME)
     for i in range(size):
-      
-      try:  
-        if df.iloc[i]["Label"] == "Split":
+      print(str(i) + " index out of: " + str(size))
+
+      if df.iloc[i]["Label"] == "Split":
           # TODO: change labels as Mano & Revital saving it
           seg_start_first = df.iloc[index_label]["From"]
           seg_end_first = df.iloc[i]["To"]
+          try:
+            
+            avg_vector_first = get_half_embedding(seg_start_first, seg_end_first, last_seen_wav_file)
+            if avg_vector_first.size == 0 or math.isnan(avg_vector_first[0]):
+                diff = seg_end_first - seg_start_first
+                complementary = 1 - diff
+                complementary = complementary / 2
+                avg_vector_first = get_half_embedding((seg_start_first - complementary), (seg_end_first + complementary), last_seen_wav_file)
+                print("Changed start and end for: " + str(seg_start_first) + " and: " + str(seg_end_first))
+          except Exception as e:
+              print("In exception")
+              random += 1
+              continue
+               
+
           index_label = i+1
           j= j+1
           vectors_pkl.iloc[j][0] = seg_start_first
           vectors_pkl.iloc[j][1] = seg_end_first
-          avg_vector_first = get_half_embedding(seg_start_first, seg_end_first, last_seen_wav_file)
           vectors_pkl.iloc[j][2] = avg_vector_first
-
-      except Exception as e:
-        random += 1
-        continue
 
     if df.iloc[size-1]["Label"] == "Same":
       seg_start_first = df.iloc[index_label]["From"]
@@ -192,16 +204,20 @@ def create_vectors_excel():
   for k in range(3,259):
       worksheet.write(0, k, "vector_" + str(k-3), bold)
 
-  for k in range(len(data_df2)):
-        worksheet.write((k + 1), 0, k)
+  try:
+	for k in range(len(data_df2)):
+		worksheet.write((k + 1), 0, k)
         worksheet.write((k + 1), 1, data_df2.iloc[k]["From"])
         worksheet.write((k + 1), 2, data_df2.iloc[k]["To"])
         vector_array = data_df2.iloc[k]["Vectors"]
         if not isinstance(vector_array, float):
-          for j in range (len(vector_array)):
-            worksheet.write((k + 1), (j+3), str(vector_array[j]))
+			for j in range (len(vector_array)):
+              worksheet.write((k + 1), (j+3), str(vector_array[j]))
+  except:
+    pass
+              
   workbook.close()
-  return	
+  return
 
 
 def run_D_vectors():
@@ -210,7 +226,7 @@ def run_D_vectors():
     data_df = pd.read_pickle(PATH + PICKLE_PATH)
     data_df = pd.read_pickle(PATH + PICKLE_PATH)
     curr_data = create_vectors(data_df)
-	#create_vectors_excel()
+	create_vectors_excel()
 	print("Done - second component - file was saved in:" + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
     pd.to_pickle(curr_data, PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
     # data_df2 = pd.read_pickle(PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
