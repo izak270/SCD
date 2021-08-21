@@ -6,6 +6,7 @@ import itertools
 from time import gmtime, strftime
 from bert_embedding import BertEmbedding
 from pathlib import Path
+import xlsxwriter
 
 PATH = "/home/itzhak/SCD/"
 
@@ -105,6 +106,24 @@ def convert_raw_data_2_data_frame():
   print("Original Length: " + str(len(general_df))) # print the length of the general data frame - all inserted files
   general_df = general_df.dropna()#dropna = drop not available
   print("After dropna Length: " + str(len(general_df)))
+  
+  fileName = PATH + "Excels/current_run_all_words_and_speakers.xlsx"
+  workbook = xlsxwriter.Workbook(fileName)
+  worksheet = workbook.add_worksheet()
+  bold = workbook.add_format({'bold': True})
+  worksheet.set_column(0, 5, 15)
+    
+  columns_names= ['ID', 'WORD', 'FROM', 'TO', 'SPEAKER']
+
+  print(columns_names)
+
+  for r in range(5):
+    worksheet.write(0, r, columns_names[r], bold)
+
+  for k in range(len(general_df)):
+      for j in range(0, 5):
+          worksheet.write((k + 1), j, general_df.iloc[k][j])
+  workbook.close()  
 
   pd.to_pickle(general_df, PATH + "Pickles/general_df_4_all_files.pkl") # from data frame to pickle
   print("Finish with raw data")
