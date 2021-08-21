@@ -115,8 +115,6 @@ def convert_raw_data_2_data_frame():
     
   columns_names= ['ID', 'WORD', 'FROM', 'TO', 'SPEAKER']
 
-  print(columns_names)
-
   for r in range(5):
     worksheet.write(0, r, columns_names[r], bold)
 

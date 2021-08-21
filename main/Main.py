@@ -6,7 +6,6 @@ from hparam import hparam as hp
 
 
 def main():
-  print('start12121212')
   convert_origin_2_raw_data()
   convert_raw_data_2_data_frame()
   convert_df_2_pkl()
