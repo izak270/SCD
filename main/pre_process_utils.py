@@ -260,7 +260,6 @@ def bert_w2v_mapper():
   return
 
 def finally_concat_pickles():
-  print("Start to concatenate Pickles")
   # list of all files from "convert_df_2_pkl.py" -
   paths = sorted(Path(PATH + "Pickles/Concat/").iterdir(), key=os.path.getmtime)
 
@@ -273,7 +272,6 @@ def finally_concat_pickles():
       initial_df = pd.concat([initial_df, curr_pkl])# concatenate DFs to initial_df
 
   pd.to_pickle(initial_df, PATH + "Pickles/raw_data_2_convert_2_embeddings.pkl")
-  print("Finish to concatenate Pickles")
   return
 
  
