@@ -169,8 +169,12 @@ def create_vectors(df):
 
 
 def run_D_vectors():
+
+	print("Second component start: creating voice vectors from words labels predictions")
+    data_df = pd.read_pickle(PATH + PICKLE_PATH)
     data_df = pd.read_pickle(PATH + PICKLE_PATH)
     curr_data = create_vectors(data_df)
+	print("Done - second component - file was saved in:" + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
     pd.to_pickle(curr_data, PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
     # data_df2 = pd.read_pickle(PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
     # print(data_df2.to_string())
