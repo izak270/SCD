@@ -136,7 +136,7 @@ def convert_raw_data_2_data_frame():
   return
 
 def convert_df_2_pkl():
-  print("Start with data frame process")
+  print("Deviding all words to segments of 6")
   df = pd.read_pickle(PATH + "Pickles/general_df_4_all_files.pkl")#back to data frame
 
   id_list = sorted(list(set(df["ID"]))) # extract to list all the file names (from if ID column in the data frame)
@@ -221,8 +221,6 @@ def convert_df_2_pkl():
           data_to_convert_df = data_to_convert_df.append(example_df) # add the two 2 segments to the general data frame
 
       cntr += 1
-      # print when we finish a file
-      print(str(cntr) + " Out of: " + str(len(id_list)) + "    " + str(strftime("%Y-%m-%d %H:%M:%S", gmtime())))
 
       # here each 10 files we divide to pickle
       if 0 == cntr % 10:
@@ -238,7 +236,7 @@ def convert_df_2_pkl():
                                            'Space_3_4', 'Label'])
 
   pd.to_pickle(data_to_convert_df, PATH + "Pickles/Concat/" + "last_data_to_convert_df_speech_text_hybrid.pkl")
-  print("Finish with data frame process")
+  print("Done with words segments")
   return
 
 def bert_w2v_mapper():
