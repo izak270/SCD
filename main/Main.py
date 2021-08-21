@@ -12,7 +12,7 @@ def main():
   bert_w2v_mapper()
   finally_concat_pickles()
   create_vectors_text_meta_voice.create_vectors_from_preprocessed_data()
-  get_predictions.get_predictions()
+  get_predictions.get_predictions_start()
   new_d_vectors2.run_D_vectors()
   kmeans_m.startk()
   return

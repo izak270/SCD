@@ -130,7 +130,7 @@ def get_predictions(general_df, words_vectors):
     workbook.close()
     return all_words_with_predictions 
 
-def get_predictions():
+def get_predictions_start():
 
 	general_df = pd.read_pickle(PATH + "Pickles/general_df_4_all_files.pkl") # read the all-words file (including identity)
 	words_vectors = pd.read_pickle(PATH + "Pickles/vec/prepared_vectors_2_split-" + file_name + ".pkl") # load the matched vectors 
