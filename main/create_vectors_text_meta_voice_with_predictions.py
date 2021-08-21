@@ -3,7 +3,6 @@ import torch
 import librosa
 import numpy as np
 import pandas as pd
-import xlsxwriter
 
 from pydub import AudioSegment
 from time import gmtime, strftime
@@ -26,6 +25,10 @@ W2V_VECTOR_LENGTH = 768
 SPEECH_EMBEDDING_DIMENSION = 256
 
 LABEL_INDEX = 2063
+
+embedder_net = SpeechEmbedder()
+embedder_net.load_state_dict(torch.load(hp.model.model_path)) # we load the model specified in the config file - final_epoch_950_batch_id_141.model
+embedder_net.eval()
 
 
 def concat_segs(times, segs):
@@ -142,19 +145,11 @@ def create_vectors(df, w2v):
     last_seen_file_id = ""
     last_seen_wav_file = ""
 
-    all_words_with_predictions = pd.DataFrame(index=range((len(df))),
-                                columns=["Word", "From", "To", "Label"])
-
     for i in range (len(df)):
         try:
 
             file_id = df.iloc[i]["ID"]
-
-
-            all_words_with_predictions["Word"].iloc[i] = df.iloc[i]["First_Word"]
-            all_words_with_predictions["From"].iloc[i] = df.iloc[i]["Segment_Start"]
-            all_words_with_predictions["To"].iloc[i] = df.iloc[i]["Segment_Start"] + df.iloc[i]["First_Duration"]
-
+			
             # NLP embedding for first half of the sliding window
             first_vec = np.zeros(W2V_VECTOR_LENGTH) # array. size: 768. values: 0
             num_words_1 = 0
@@ -242,97 +237,10 @@ def create_vectors(df, w2v):
 
     print("Random Vectors: " + str(random))
 
-
-    test_vectors =  vectors_pkl
-
-    X_test = test_vectors.iloc[:, :-2]
-    Y_test = list(test_vectors[LABEL_INDEX])
-
-    classes = pd.read_pickle(PATH + 'Pickles/hybrid_BERT_classes_for_test.pkl')
-    inverse_classes = {v: k for k, v in classes.items()}
-
-    data_x = []
-    indices = X_test.index.values
-
-    idx = 0
-    for index in indices:
-        idx += 1
-        data_x.append(list(X_test.loc[index]))
-
-    test_x = np.array(data_x)
-    torch_tensor_X = torch.from_numpy(test_x).float()
-
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    device = "cpu"
-
-    os.chdir(PATH + "Models/Neural/")
-    all_models_name = glob.glob("*.pth")
-    all_models_name.sort(key=lambda x: os.path.getmtime(x))
-
-    results = []
-
-    print(str(strftime("%Y-%m-%d %H:%M:%S", gmtime())))
-
-    for k in range(len(all_models_name)):
-
-        curr_y_pred = []
-        curr_y_true = []
-
-        #  y_probas = []
-
-        split_rate = 0
-        split_pred = 0
-        same_rate = 0
-        same_pred = 0
-
-        model_name = all_models_name[k]
-        filename = Path(PATH + "Models/Neural/" + model_name)
-
-        model = torch.load(filename, map_location=device)
-        model.eval()
-        model.cpu()
-        print(str(k + 1) + ", Model " + model_name + " has restored at " + str(strftime("%Y-%m-%d %H:%M:%S", gmtime())))
-
-        model.eval()
-        inputs = torch_tensor_X.to(device)
-        predictions = model.forward(inputs)
-
-        for i in range(len(predictions)):
-            prediction = predictions[i]
-            prediction = [prediction.data[0].item(), prediction.data[1].item()]
-            prediction = [round(x, 3) for x in prediction]
-            #  y_probas.append(prediction)
-
-            true_class = Y_test[i]
-            max_index = prediction.index(max(prediction))
-            prediction_class = inverse_classes[max_index]
-            all_words_with_predictions["Label"].iloc[i] = prediction_class
-
-            curr_y_pred.append(prediction_class)
-            curr_y_true.append(true_class)
-
-    fileName = PATH + "main/Data_Frame_WithLabels.xlsx"
-    workbook = xlsxwriter.Workbook(fileName)
-    worksheet = workbook.add_worksheet()
-    bold = workbook.add_format({'bold': True})
-    worksheet.set_column(0, 4, 15)
-
-    worksheet.write(0, 0, "Word", bold)
-    worksheet.write(0, 1, "Start Time", bold)
-    worksheet.write(0, 2, "End Time", bold)
-    worksheet.write(0, 3, "Label", bold)
-
-    for k in range(len(all_words_with_predictions)):
-        for j in range(0, 4):
-            print(all_words_with_predictions.iloc[k][j])
-            worksheet.write((k + 1), j, all_words_with_predictions.iloc[k][j])
-
-    workbook.close()
     return vectors_pkl
-    pd.to_pickle(all_words_with_predictions, PATH + "Pickles/"+file_id+"_with_labels"+".pkl")
-    return vectors_pkl
+   
 
-def create_labels_df_from_vectors():
+def create_vectors_from_preprocessed_data():
 
   data_df = pd.read_pickle(PATH + "Pickles/raw_data_2_convert_2_embeddings.pkl") # load the final data frame (ordered by segments)
 
@@ -348,20 +256,3 @@ def create_labels_df_from_vectors():
   return
 
 
-embedder_net = SpeechEmbedder()
-embedder_net.load_state_dict(torch.load(hp.model.model_path)) # we load the model specified in the config file - final_epoch_950_batch_id_141.model
-embedder_net.eval()
-
-# data_df = pd.read_pickle(PATH + "Pickles/raw_data_2_convert_2_embeddings.pkl") # load the final data frame (ordered by segments)
-#
-# id_list = sorted(list(set(list(data_df["ID"])))) # extract all file names from the data frame
-# # id_list = id_list[24:]
-#
-# word2vec = pd.read_pickle(PATH + 'Models/Word2Vec/bert_w2v_dictionary.pkl') # bert dictionary for each word -> list of 768 values
-#
-# for curr_id in id_list:
-#     sub_df = data_df[data_df["ID"] == curr_id] # sub data frame splitted according to the current file name
-#     curr_data = create_vectors(sub_df, word2vec) #
-#     pd.to_pickle(curr_data, PATH + "Pickles/vec/prepared_vectors_2_split-" + str(curr_id) + ".pkl")
-#
-# pass
