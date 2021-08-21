@@ -205,14 +205,14 @@ def create_vectors_excel():
       worksheet.write(0, k, "vector_" + str(k-3), bold)
 
   try:
-	for k in range(len(data_df2)):
-		worksheet.write((k + 1), 0, k)
+    for k in range(len(data_df2)):
+        worksheet.write((k + 1), 0, k)
         worksheet.write((k + 1), 1, data_df2.iloc[k]["From"])
         worksheet.write((k + 1), 2, data_df2.iloc[k]["To"])
         vector_array = data_df2.iloc[k]["Vectors"]
         if not isinstance(vector_array, float):
-			for j in range (len(vector_array)):
-              worksheet.write((k + 1), (j+3), str(vector_array[j]))
+            for j in range (len(vector_array)):
+                worksheet.write((k + 1), (j+3), str(vector_array[j]))
   except:
     pass
               
