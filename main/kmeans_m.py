@@ -10,12 +10,10 @@ PATH = "/home/itzhak/SCD/"
 
 def kmeans():
     df = pd.read_pickle(PATH + 'Pickles/vec/prepared_vectors_2_split-RON_OLGA.pkl')
-    print(df)
     df = pd.read_pickle(PATH + 'Pickles/vec/vector_olga_ron.pkl')
-    print(df)
     df.head()
     my_list = [i for i in range(256)]
-
+    return  df
     df2 = df[df['Vectors'].notna()]
     start = pd.DataFrame(df2['From'].to_list(), columns=['start'])
     finish = pd.DataFrame(df2['To'].to_list(), columns=['finish'])
@@ -40,8 +38,8 @@ def kmeans():
     gf3['cluster']=y_predicted
     gf3['start']=start
     gf3['finish']=finish
-    print(gf3,'newgf')
-
+    print(gf3,'gf3')
+    return  gf3
     # fileName = PATH + "main/Data_Frame_WithLabels2.xlsx"
     # workbook = xlsxwriter.Workbook(fileName)
     # worksheet = workbook.add_worksheet()
@@ -58,7 +56,7 @@ def kmeans():
     #     worksheet.write((k + 1), 2, gf3.iloc[k]['finish'])
     # workbook.close()
 
-def startk():
-        kmeans()
+def start():
+        return kmeans()
         return
 

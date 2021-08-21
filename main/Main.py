@@ -13,11 +13,11 @@ def main():
   # finally_concat_pickles()
   # create_vectors_text_meta_voice_with_predictions.create_labels_df_from_vectors()
   # new_d_vectors2.run_D_vectors()
-  kmeans_m.startk()
+  return kmeans_m.start()
   return
 
 def startMain():
-    main()
+    return main()
 #
 if __name__ == "__main__":
     main()
