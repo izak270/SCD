@@ -242,6 +242,7 @@ def create_vectors(df, w2v):
 
 def create_vectors_from_preprocessed_data():
 
+  print("Start creating verctos for all words")
   data_df = pd.read_pickle(PATH + "Pickles/raw_data_2_convert_2_embeddings.pkl") # load the final data frame (ordered by segments)
 
   id_list = sorted(list(set(list(data_df["ID"])))) # extract all file names from the data frame
@@ -253,6 +254,7 @@ def create_vectors_from_preprocessed_data():
       sub_df = data_df[data_df["ID"] == curr_id] # sub data frame splitted according to the current file name
       curr_data = create_vectors(sub_df, word2vec) #
       pd.to_pickle(curr_data, PATH + "Pickles/vec/prepared_vectors_2_split-" + str(curr_id) + ".pkl")
+	  print("Done with vectors part - vector file saved in Pickles/vec/prepared_vectors_2_split-" + str(curr_id) + ".pkl")
   return
 
 
