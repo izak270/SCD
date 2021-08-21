@@ -11,6 +11,8 @@ PATH = "/home/itzhak/SCD/"
 def kmeans():
     df = pd.read_pickle(PATH + 'Pickles/vec/prepared_vectors_2_split-RON_OLGA.pkl')
     print(df)
+    df = pd.read_pickle(PATH + 'Pickles/vec/vector_olga_ron.pkl')
+    print(df)
     df.head()
     my_list = [i for i in range(256)]
 
@@ -38,7 +40,7 @@ def kmeans():
     gf3['cluster']=y_predicted
     gf3['start']=start
     gf3['finish']=finish
-    print(gf3)
+    print(gf3,'newgf')
 
     # fileName = PATH + "main/Data_Frame_WithLabels2.xlsx"
     # workbook = xlsxwriter.Workbook(fileName)
