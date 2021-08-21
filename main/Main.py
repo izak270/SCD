@@ -11,7 +11,7 @@ def main():
   convert_df_2_pkl()
   bert_w2v_mapper()
   finally_concat_pickles()
-  create_vectors_text_meta_voice_with_predictions.create_labels_df_from_vectors()
+  create_vectors_text_meta_voice_with_predictions.create_vectors_from_preprocessed_data()
   new_d_vectors2.run_D_vectors()
   kmeans_m.startk()
   return
