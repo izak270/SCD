@@ -251,10 +251,10 @@ def create_vectors_from_preprocessed_data():
   word2vec = pd.read_pickle(PATH + 'Models/Word2Vec/bert_w2v_dictionary.pkl') # bert dictionary for each word -> list of 768 values
 
   for curr_id in id_list:
-	sub_df = data_df[data_df["ID"] == curr_id] # sub data frame splitted according to the current file name
-	curr_data = create_vectors(sub_df, word2vec) #
-	pd.to_pickle(curr_data, PATH + "Pickles/vec/prepared_vectors_2_split-" + str(curr_id) + ".pkl")
-	print("Done with vectors part - vector file saved in Pickles/vec/prepared_vectors_2_split-" + str(curr_id) + ".pkl")
+      sub_df = data_df[data_df["ID"] == curr_id] # sub data frame splitted according to the current file name
+      curr_data = create_vectors(sub_df, word2vec) #
+      pd.to_pickle(curr_data, PATH + "Pickles/vec/prepared_vectors_2_split-" + str(curr_id) + ".pkl")
+      print("Done with vectors part - vector file saved in Pickles/vec/prepared_vectors_2_split-" + str(curr_id) + ".pkl")
   return
 
 
