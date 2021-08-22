@@ -46,7 +46,7 @@ def kmeans():
     gf3['From']=start
     gf3['To']=finish
     pd.to_pickle(gf3, settings.PATH + "Pickles/vec/pkl_with_clusters.pkl")
-    fileName = settings.PATH + "Excels/Data_Frame_With_Labels_And_Clusters.xlsx"
+    fileName = settings.PATH + "main/xlsx/Data_Frame_With_Labels_And_Clusters.xlsx"
     workbook = xlsxwriter.Workbook(fileName)
     worksheet = workbook.add_worksheet()
     bold = workbook.add_format({'bold': True})
