@@ -15,7 +15,7 @@ def main():
   create_vectors_text_meta_voice.create_vectors_from_preprocessed_data()
   get_predictions.get_predictions_start()
   new_d_vectors2.run_D_vectors()
-  kmeans_m.startk()
+  kmeans_m.start()
   return
 
 
