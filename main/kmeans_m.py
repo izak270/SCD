@@ -20,20 +20,24 @@ def kmeans():
     finish = pd.DataFrame(df2['To'].to_list(), columns=['To'])
     gf3 = pd.DataFrame(df2['Vectors'].to_list(), columns=my_list)
     gf3 = gf3[gf3[0].notna()]
-    print(gf3)
-    print('asdf',gf3[my_list],'mylistsdasdfsdf')
     sse = []
-    k_rng = range(1, len(gf3))
+
+    print("Data frame length: " + str(len(gf3)))
+
+    if len(gf3) > 50:  
+      k_rng = range(1, 50)
+    else:
+      k_rng = range(1, len(gf3))
 
     for k in k_rng:
+        print(k)
         km = KMeans(n_clusters=k)
         km.fit(gf3[my_list])
         sse.append(km.inertia_)
 
-    print(sse)
     x = range(1, len(k_rng)+1)
     kn = KneeLocator(x, sse, curve='convex', direction='decreasing')
-    print(kn.knee,'i wish seven')
+    print("Number of clusters: " + str(kn.knee))
 
     km = KMeans(n_clusters=kn.knee)
     y_predicted = km.fit_predict(gf3[my_list])
@@ -41,9 +45,8 @@ def kmeans():
     gf3['cluster']=y_predicted
     gf3['From']=start
     gf3['To']=finish
-    print(gf3,'gf3')
     pd.to_pickle(gf3, settings.PATH + "Pickles/vec/pkl_with_clusters.pkl")
-    fileName = settings.PATH + "main/xlsx/Data_Frame_WithLabels.xlsx"
+    fileName = settings.PATH + "Excels/Data_Frame_With_Labels_And_Clusters.xlsx"
     workbook = xlsxwriter.Workbook(fileName)
     worksheet = workbook.add_worksheet()
     bold = workbook.add_format({'bold': True})
@@ -71,4 +74,3 @@ def start():
     error = get_error_rate(settings.PATH + "Pickles/" + file_name + "_with_labels.pkl" , settings.PATH + "Pickles/vec/pkl_with_clusters.pkl")
     print('ERROR: ', error, '%')
   
-     
