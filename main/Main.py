@@ -19,16 +19,8 @@ def main():
   return
 
 
-def first_process():
-    create_vectors_text_meta_voice_with_predictions.create_labels_df_from_vectors()
-
-
-def second_process():
-    new_d_vectors2.run_D_vectors()
-    return kmeans_m.start()
-
-
 def pre_process():
+    settings.init()
     convert_origin_2_raw_data()
     convert_raw_data_2_data_frame()
     convert_df_2_pkl()
@@ -36,11 +28,29 @@ def pre_process():
     finally_concat_pickles()
     return
 
-def startFirstProcess():
-    return first_process()
+
+def first_process():
+    settings.init()
+    create_vectors_text_meta_voice.create_vectors_from_preprocessed_data()
+    get_predictions.get_predictions_start()
+    return
+
+
+def second_process():
+    settings.init()
+    new_d_vectors2.run_D_vectors()
+    kmeans_m.startk()
+    return
+
+
 
 def startSpreProcess():
     return pre_process()
+
+
+def startFirstProcess():
+    return first_process()
+
 
 def startSecondProcess():
     return second_process()
