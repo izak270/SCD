@@ -1,6 +1,6 @@
 <h1>Speaker diarization</h1>
 <div class="process_one_container">
-  <input type="file" (change)="onFileSelected($event.target)" />
+  <input type="file" name='file' (change)="onFileSelected($event.target)" multiple/>
   <img *ngIf="showLoader" src="../assets/loading.gif" alt="" />
   <button (click)="startProcess()">first process</button>
   <button (click)="startSecondProcess()">second process</button>
@@ -58,7 +58,7 @@
           ></div>
         </div>
       </div>
-      <p [ngStyle]="{ color: colors[speacker['cluster']] }">
+      <p *ngIf = "speacker[0]" [ngStyle]="{ color: colors[speacker['cluster']] }">
         specker{{ speacker["cluster"] }}
       </p>
     </div>

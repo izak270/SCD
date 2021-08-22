@@ -51,10 +51,10 @@ def kmeans():
     worksheet.write(0, 1, "Start Time", bold)
     worksheet.write(0, 2, "End Time", bold)
 
-    plt.xlabel('K')
-    plt.ylabel('Sum of squared error')
-    plt.plot(k_rng, sse)
-    plt.show()
+    # plt.xlabel('K')
+    # plt.ylabel('Sum of squared error')
+    # plt.plot(k_rng, sse)
+    # plt.show()
     for k in range(0, len(gf3)):
         worksheet.write((k + 1), 0, gf3.iloc[k]['cluster'])
         worksheet.write((k + 1), 1, gf3.iloc[k]['start'])
@@ -63,7 +63,6 @@ def kmeans():
     return gf3
 
 def start():
-    error = get_error_rate()
-    print('ERROR: ', error, '%')
+    # error = get_error_rate()
+    # print('ERROR: ', error, '%')
     return kmeans()
-kmeans()

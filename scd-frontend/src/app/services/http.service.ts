@@ -12,19 +12,17 @@ export class HttpService {
   }
 
 
-  public uploadFile(file: any, option?: any) {
+  public uploadFile(files: any, option?: any) {
     // const formData = new FormData();
     // formData.append("file", file, 'file.name');
     console.log('sec11');
-    console.log(file);
-    const formData = new FormData();
-    formData.append("file", file,'myfile');
+    console.log(files);
     return this.http.post(this.baseUrl + 'upload_file',
-    formData, {headers : new HttpHeaders({ 'Content-Type': 'image/jpeg','enctype': 'multipart/form-data' })}
+    files, {headers : new HttpHeaders({ 'enctype': 'multipart/form-data' })}
     )
   }
 
-  public PostFirstProcess(file: any) {
+  public PostFirstProcess() {
   
     return this.http.get(this.baseUrl + 'start_first_process', {
             headers:
@@ -36,7 +34,7 @@ export class HttpService {
         })
   }
 
-  public PostSecondProcess(file: any) {
+  public PostSecondProcess() {
     let headers = new HttpHeaders({'FileName': 'asd'})
     return this.http.get(this.baseUrl + 'start_second_process', {
             headers:

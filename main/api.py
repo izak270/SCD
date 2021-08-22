@@ -8,6 +8,7 @@ from werkzeug.utils import secure_filename
 from main import Main
 import settings
 
+
 settings.init()
 
 app = Flask(__name__, static_url_path=settings.PATH + '*')
@@ -16,7 +17,22 @@ api = Api(app)
 
 class UploadFile(Resource):
     def post(self):
-        Main.startSpreProcess()
+        try:
+            file_list = request.files.getlist("uploadFile1")
+            for file in file_list:
+                if 'xml' in file.filename:
+                    print('xml')
+                    file.save(settings.PATH+'words/'+file.filename)
+                else:
+                    print('wav')
+                    file.save(settings.PATH+'Signals/'+file.filename)
+
+        except:
+            print("Oops!", sys.exc_info(), "occurred.")
+            print("Next entry.")
+            print()
+
+        # Main.startSpreProcess()
         return {"data": "upload file"}
 
 
@@ -61,6 +77,7 @@ class GetDataForDiagram(Resource):
         #     print()
 
         # return ('Data_Frame_WithLabels.xlsx')
+
 
 api.add_resource(UploadFile, "/upload_file")
 api.add_resource(StartFirstProcess, "/start_first_process")

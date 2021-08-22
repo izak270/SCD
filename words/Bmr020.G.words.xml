@@ -43,7 +43,6 @@
    <vocalsound nite:id="Bmr020.vocalsound.66" starttime="" endtime="" description="blowing air"/>
    <w nite:id="Bmr020.w.632" starttime="141.51" endtime="141.81" c="W">Right</w>
    <w nite:id="Bmr020.w.633" starttime="141.81" endtime="141.81" c=".">.</w>
-   <!--
    <w nite:id="Bmr020.w.634" starttime="143.11" endtime="143.16" c="W">I</w>
    <w nite:id="Bmr020.w.635" starttime="143.16" endtime="143.37" c="W">hope</w>
    <w nite:id="Bmr020.w.636" starttime="143.37" endtime="143.5" c="W">they</w>
@@ -4460,6 +4459,5 @@
    <w nite:id="Bmr020.w.9,596" starttime="2295.62" endtime="2295.62" c="CM">,</w>
    <w nite:id="Bmr020.w.9,597" starttime="2295.62" endtime="2296.0" c="W">um</w>
    <disfmarker nite:id="Bmr020.disfmarker.504" starttime="" endtime=""/>
-   -->
    <comment nite:id="Bmr020.comment.387" starttime="" endtime="" description="Censored"/>
 </nite:root>

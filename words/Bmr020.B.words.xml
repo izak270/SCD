@@ -26,7 +26,6 @@
    <w nite:id="Bmr020.w.158" starttime="29.96" endtime="30.19" c="W">not</w>
    <disfmarker nite:id="Bmr020.disfmarker.5" starttime="" endtime=""/>
    <w nite:id="Bmr020.w.159" starttime="30.19" endtime="" c="W">it</w>
-   <!--
    <w nite:id="Bmr020.w.160" starttime="" endtime="30.31" c="APOSS">'s</w>
    <w nite:id="Bmr020.w.161" starttime="30.31" endtime="30.44" c="W">not</w>
    <w nite:id="Bmr020.w.162" starttime="30.44" endtime="30.62" c="W">that</w>
@@ -1963,5 +1962,4 @@
    <w nite:id="Bmr020.w.15,331" starttime="" endtime="" c="CM">,</w>
    <w nite:id="Bmr020.w.15,332" starttime="" endtime="" c="W">so</w>
    <w nite:id="Bmr020.w.15,333" starttime="" endtime="" c=".">.</w>
-   -->
 </nite:root>

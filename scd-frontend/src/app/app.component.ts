@@ -36,59 +36,44 @@ export class AppComponent implements OnInit {
     '#6666FF',
   ];
   public speackers: any = [
-    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 1 },
-    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 2 },
-    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 3 },
-    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 1 },
-    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 4 },
-    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 2 },
-    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 5 },
-    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 1 },
-    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 4 },
-    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 2 },
-    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 5 },
-    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 1 },
-    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 1 },
+  
   ];
-  public file: any;
+  public files: any;
   constructor(private httpService: HttpService) {}
 
-  ngOnInit() {
-  }
-  onFileSelected(file: any) {
-    this.file = file.files[0];
-    // this.startProcess()
-    this.uploadFile(this.file);
-    // WshShell.Run("../app/files-from-server/file_example_XLS_10.xls", 1, false);
+  ngOnInit() {}
+  onFileSelected(target: any) {
+    this.files = target.files;
+    console.log(this.files);
+    this.uploadFile(this.files);
   }
 
-  uploadFile(file: any) {
-    this.showResults2 = true;
-    var form_data = new FormData();
-    // form_data.append('file', file1)
-    // console.log(file1);
-
+  uploadFile(files: any) {
+    console.log(typeof files['FileList']);
+    const filelist = [];
     let formData: FormData = new FormData();
-    formData.append('uploadFile', file, 'file1.name');
-    //   let headers = new HttpHeaders({
-    //     'Content-Type': 'image/jpeg'})
-    //   let options = {
-    //     headers: headers
-    //  }
-
+    for (var i = 0; i < files.length; ++i) {
+      filelist[i] = files.item(i).name;
+      console.log(files.item(i));
+      formData.append(
+        'uploadFile1',
+        files.item(i),
+        (filelist[i] = files.item(i).name)
+      );
+    }
     this.showLoader = true;
     this.httpService.uploadFile(formData).subscribe((data) => {
-      setTimeout(() => {
-        this.showLoader = false;
-      }, 3000);
+      this.showLoader = false;
       console.log(data);
     });
   }
 
   startProcess() {
     console.log('startProcess');
-    this.httpService.PostFirstProcess(this.file).subscribe((response) => {
+    this.showLoader = true;
+    this.httpService.PostFirstProcess().subscribe((response) => {
       console.log(response, '111');
+      this.showLoader = false
       const url = window.URL.createObjectURL(new Blob([response]));
       const link = document.createElement('a');
       link.href = url;
@@ -100,8 +85,10 @@ export class AppComponent implements OnInit {
 
   startSecondProcess() {
     console.log('second');
-    this.httpService.PostSecondProcess(this.file).subscribe((response) => {
+    this.showLoader = true;
+    this.httpService.PostSecondProcess().subscribe((response) => {
       console.log(response);
+      this.showLoader = false;
       const url = window.URL.createObjectURL(new Blob([response]));
       const link = document.createElement('a');
       link.href = url;

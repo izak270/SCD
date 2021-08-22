@@ -75,4 +75,3 @@ def startk():
         #print('ERROR: ', error, '%')
         return
 
-startk()

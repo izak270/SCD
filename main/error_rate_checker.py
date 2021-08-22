@@ -25,4 +25,3 @@ def get_error_rate():
 
     return true_positive_rate / len(source_df)
 
-get_error_rate()
