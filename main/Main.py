@@ -16,9 +16,33 @@ def main():
   return kmeans_m.start()
   return
 
-def startMain():
-    return main()
-#
+
+def first_process():
+    create_vectors_text_meta_voice_with_predictions.create_labels_df_from_vectors()
+
+
+def second_process():
+    new_d_vectors2.run_D_vectors()
+    return kmeans_m.start()
+
+
+def pre_process():
+    convert_origin_2_raw_data()
+    convert_raw_data_2_data_frame()
+    convert_df_2_pkl()
+    bert_w2v_mapper()
+    finally_concat_pickles()
+    return
+
+def startFirstProcess():
+    return first_process()
+
+def startSpreProcess():
+    return pre_process()
+
+def startSecondProcess():
+    return second_process()
+
 if __name__ == "__main__":
     main()
 

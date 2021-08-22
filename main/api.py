@@ -33,7 +33,7 @@ class UploadFile(Resource):
 class StartFirstProcess(Resource):
     def get(self):
         print('start3')
-        # Main.startMain()
+        Main.startFirstProcess()
         try:
             return send_from_directory(directory='', path='Data_Frame_WithLabels.xlsx', as_attachment=True)
         except:
@@ -47,7 +47,7 @@ class StartFirstProcess(Resource):
 class StartSecondProcess(Resource):
     def get(self):
         print('start second',Resource)
-        x = Main.startMain()
+        x = Main.startSecondProcess()
         try:
             return send_from_directory(directory='', path='Data_Frame_WithLabels.xlsx', as_attachment=True)
         except:
@@ -62,10 +62,6 @@ class GetDataForDiagram(Resource):
     def get(self):
         print('get data for diagram',Resource)
         x = Main.startMain()
-        print(x,'xxxxxxxxxxxxxxxxxxxxx')
-        y = x.values.tolist()
-        y = np.array(y)
-        print(y)
         return Response(x.to_json(orient="records"),mimetype="application/json")
         # try:
         #     return send_from_directory(directory='', path='Data_Frame_WithLabels.xlsx', as_attachment=True)
