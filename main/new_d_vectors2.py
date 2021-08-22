@@ -143,7 +143,7 @@ def create_vectors(df, file_name):
     size = len(df)
     vectors_pkl = pd.DataFrame(index=range(size), columns=["From", "To", "Vectors"])
     index_label = 0
-    wav_file = AudioSegment.from_wav(PATH + WAV_PATH + file_name + ".interaction.wav")
+    wav_file = AudioSegment.from_wav(settings.PATH + WAV_PATH + file_name + ".interaction.wav")
     for i in range(size):
       
       try:  
