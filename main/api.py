@@ -26,7 +26,7 @@ class UploadFile(Resource):
                 else:
                     print('wav')
                     file.save(settings.PATH+'Signals/'+file.filename)
-
+            Main.startSpreProcess()
         except:
             print("Oops!", sys.exc_info(), "occurred.")
             print("Next entry.")
@@ -61,14 +61,12 @@ class StartSecondProcess(Resource):
 class GetXlsx(Resource):
     def get(self):
         print('get data for diagram', Resource)
-
         try:
-            return send_from_directory(directory='', path='xlsx/Data_Frame_WithLabels.xlsx', as_attachment=True)
+            return send_from_directory(directory='', path='xlsx/Data_Frame_With_Labels_And_Clusters.xlsx', as_attachment=True)
         except:
             print("Oops!", sys.exc_info(), "occurred.")
             print("Next entry.")
             print()
-
 
 
 api.add_resource(UploadFile, "/upload_file")
