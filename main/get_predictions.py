@@ -7,13 +7,12 @@ import xlsxwriter
 import glob
 from pathlib import Path
 from time import gmtime, strftime
-
+import settings
 from hybrid_bert_nn_definition import HybridSCDModel
 
 
 #in this part we use the model / models we have to predict if if it's the same speaker or not between each two words
 
-PATH = "/home/itzhak/SCD/"
 
 LABEL_INDEX = 2063
 
@@ -47,7 +46,7 @@ def get_predictions(general_df, words_vectors):
     X_test = test_vectors.iloc[:, :-2]
     Y_test = list(test_vectors[LABEL_INDEX])
 
-    classes = pd.read_pickle(PATH + 'Pickles/hybrid_BERT_classes_for_test.pkl')
+    classes = pd.read_pickle(settings.PATH + 'Pickles/hybrid_BERT_classes_for_test.pkl')
     inverse_classes = {v: k for k, v in classes.items()}
 
     data_x = []
@@ -64,9 +63,9 @@ def get_predictions(general_df, words_vectors):
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     device = "cpu"
 
-    os.chdir(PATH + "Models/Neural/")
+    os.chdir(settings.PATH + "Models/Neural/")
     all_models_name = glob.glob("*.pth")
-    all_models_name.sort(key=lambda x: os.path.getmtime(x))
+    all_models_name.sort(key=lambda x: os.PATH.getmtime(x))
 
     results = []
 
@@ -85,7 +84,7 @@ def get_predictions(general_df, words_vectors):
         same_pred = 0
 
         model_name = all_models_name[k]
-        filename = Path(PATH + "Models/Neural/" + model_name)
+        filename = Path(settings.PATH + "Models/Neural/" + model_name)
 
         model = torch.load(filename, map_location=device)
         model.eval()
@@ -110,7 +109,7 @@ def get_predictions(general_df, words_vectors):
             curr_y_pred.append(prediction_class)
             curr_y_true.append(true_class)
 
-    fileName = PATH + "/Excels/All_Words_With_Speaker_And_Label.xlsx"
+    fileName = settings.PATH + "/Excels/All_Words_With_Speaker_And_Label.xlsx"
     workbook = xlsxwriter.Workbook(fileName)
     worksheet = workbook.add_worksheet()
     bold = workbook.add_format({'bold': True})
@@ -136,10 +135,10 @@ def get_predictions(general_df, words_vectors):
 def get_predictions_start():
 
   print("Start to use in model to get predictions labels")
-  general_df = pd.read_pickle(PATH + "Pickles/general_df_4_all_files.pkl") # read the all-words file (including identity)
-  words_vectors = pd.read_pickle(PATH + "Pickles/vec/prepared_vectors_2_split-" + file_name + ".pkl") # load the matched vectors 
+  general_df = pd.read_pickle(settings.PATH + "Pickles/general_df_4_all_files.pkl") # read the all-words file (including identity)
+  words_vectors = pd.read_pickle(settings.PATH + "Pickles/vec/prepared_vectors_2_split-" + file_name + ".pkl") # load the matched vectors 
   all_words_with_predictions = get_predictions(general_df, words_vectors) # get the predictions file
-  pd.to_pickle(all_words_with_predictions, PATH + "Pickles/" + file_name +"_with_labels" + ".pkl")
-  print("Done with labels for all words - saved in " + PATH + "Pickles/" + file_name +"_with_labels" + ".pkl")
+  pd.to_pickle(all_words_with_predictions, settings.PATH + "Pickles/" + file_name +"_with_labels" + ".pkl")
+  print("Done with labels for all words - saved in " + settings.PATH + "Pickles/" + file_name +"_with_labels" + ".pkl")
 	
   return 

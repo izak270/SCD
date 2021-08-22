@@ -6,7 +6,7 @@ import pandas as pd
 
 from pydub import AudioSegment
 from time import gmtime, strftime
-
+import settings
 import glob
 from pathlib import Path
 
@@ -16,7 +16,6 @@ from speech_embedder_net import SpeechEmbedder
 from hybrid_bert_nn_definition import HybridSCDModel
 
 
-PATH = "/home/itzhak/SCD/"
 
 WAV_PATH = "Signals/"
 
@@ -121,7 +120,7 @@ def get_half_embedding(segment_start, segment_end, the_wav):
     seg_end = float(segment_end) * 1000
 
     sub_sample = the_wav[seg_start:seg_end]
-    file_2_create = PATH + "temp_wav_file.wav"
+    file_2_create = settings.PATH + "temp_wav_file.wav"
     sub_sample.export(file_2_create, format="wav")
 
     voice_embedding_vectors = get_average_voice_embedding(file_2_create)
@@ -185,7 +184,7 @@ def create_vectors(df, w2v):
             #################-SPEECH-#################
             if file_id != last_seen_file_id:
                 last_seen_file_id = file_id
-                last_seen_wav_file = AudioSegment.from_wav(PATH + WAV_PATH +
+                last_seen_wav_file = AudioSegment.from_wav(settings.PATH + WAV_PATH +
                                                            "/" + str(file_id) + ".interaction.wav")
 
             # speech embedding for first half of the sliding window
@@ -243,17 +242,17 @@ def create_vectors(df, w2v):
 def create_vectors_from_preprocessed_data():
 
   print("Start creating verctos for all words")
-  data_df = pd.read_pickle(PATH + "Pickles/raw_data_2_convert_2_embeddings.pkl") # load the final data frame (ordered by segments)
+  data_df = pd.read_pickle(settings.PATH + "Pickles/raw_data_2_convert_2_embeddings.pkl") # load the final data frame (ordered by segments)
 
   id_list = sorted(list(set(list(data_df["ID"])))) # extract all file names from the data frame
   # id_list = id_list[24:]
 
-  word2vec = pd.read_pickle(PATH + 'Models/Word2Vec/bert_w2v_dictionary.pkl') # bert dictionary for each word -> list of 768 values
+  word2vec = pd.read_pickle(settings.PATH + 'Models/Word2Vec/bert_w2v_dictionary.pkl') # bert dictionary for each word -> list of 768 values
 
   for curr_id in id_list:
       sub_df = data_df[data_df["ID"] == curr_id] # sub data frame splitted according to the current file name
       curr_data = create_vectors(sub_df, word2vec) #
-      pd.to_pickle(curr_data, PATH + "Pickles/vec/prepared_vectors_2_split-" + str(curr_id) + ".pkl")
+      pd.to_pickle(curr_data, settings.PATH + "Pickles/vec/prepared_vectors_2_split-" + str(curr_id) + ".pkl")
       print("Done with vectors part - vector file saved in Pickles/vec/prepared_vectors_2_split-" + str(curr_id) + ".pkl")
   return
 

@@ -5,11 +5,11 @@ from sklearn.preprocessing import MinMaxScaler
 from matplotlib import pyplot as plt
 from kneed import KneeLocator
 import math
+import settings
 
-PATH = "/home/itzhak/SCD/"
 
 def kmeans():
-    df = pd.read_pickle(PATH + 'Pickles/vec/prepared_vectors_2_split-RON_OLGA.pkl')
+    df = pd.read_pickle(settings.PATH + 'Pickles/vec/prepared_vectors_2_split-RON_OLGA.pkl')
     print(df)
     df.head()
     my_list = [i for i in range(256)]
@@ -40,7 +40,7 @@ def kmeans():
     gf3['finish']=finish
     print(gf3)
 
-    # fileName = PATH + "main/Data_Frame_WithLabels2.xlsx"
+    # fileName = settings.PATH + "main/Data_Frame_WithLabels2.xlsx"
     # workbook = xlsxwriter.Workbook(fileName)
     # worksheet = workbook.add_worksheet()
     # bold = workbook.add_format({'bold': True})

@@ -3,9 +3,10 @@ from pre_process_utils import convert_origin_2_raw_data, convert_raw_data_2_data
 import create_vectors_text_meta_voice, hparam, new_d_vectors2, kmeans_m
 import get_predictions
 from hparam import hparam as hp
-
+import settings
 
 def main():
+  settings.init()  
   convert_origin_2_raw_data()
   convert_raw_data_2_data_frame()
   convert_df_2_pkl()
