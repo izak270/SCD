@@ -16,10 +16,8 @@ from speech_embedder_net import SpeechEmbedder
 # TODO: talk with other groups about files addresses & data saving conv
 # TODO: change addresses
 
-PICKLE_PATH = "Pickles/Bed003_with_labels.pkl"
-WAV_PATH = "Signals/"
-WAV_NAME = "Bed003.interaction.wav"
 
+WAV_PATH = "Signals/"
 FINALE_PICKLE_NAME = "RON_OLGA"
 
 W2V_VECTOR_LENGTH = 768
@@ -138,7 +136,7 @@ def get_size(df):
     return (counter+1)
 	
 
-def create_vectors(df):
+def create_vectors(df, file_name):
     #vectors_pkl = pd.DataFrame(index=range(len(df)), columns=range(4))
     random = 0
     j=-1
@@ -147,7 +145,7 @@ def create_vectors(df):
     size = len(df)
     vectors_pkl = pd.DataFrame(index = range(segments_size), columns=["From", "To", "Vectors"])
     index_label = 0
-    last_seen_wav_file = AudioSegment.from_wav(settings.PATH + WAV_PATH + WAV_NAME)
+    last_seen_wav_file = AudioSegment.from_wav(settings.PATH + WAV_PATH + file_name + ".interaction.wav")
     for i in range(size):
       print(str(i) + " index out of: " + str(size))
 
@@ -223,8 +221,11 @@ def create_vectors_excel():
 def run_D_vectors():
 
   print("Second component start: creating voice vectors from words labels predictions")
-  data_df = pd.read_pickle(settings.PATH + PICKLE_PATH)
-  curr_data = create_vectors(data_df)
+  
+  general_df = pd.read_pickle(settings.PATH + "Pickles/general_df_4_all_files.pkl")
+  file_name = general_df["ID"].iloc[0]
+  data_df = pd.read_pickle(settings.PATH + "Pickles/" + file_name + "_with_labels.pkl")
+  curr_data = create_vectors(data_df, file_name)
   pd.to_pickle(curr_data, settings.PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")  
   print("Done - second component - file was saved in:" + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")  
   create_vectors_excel()

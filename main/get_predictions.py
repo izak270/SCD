@@ -16,12 +16,11 @@ from hybrid_bert_nn_definition import HybridSCDModel
 
 LABEL_INDEX = 2063
 
-file_name = "Bmr030"
-
-
 def get_predictions(general_df, words_vectors):
 
     words_size = len(general_df)
+
+    file_name = general_df["ID"].iloc[0]
 
     all_words_with_predictions = pd.DataFrame(index=range((words_size)),
                                 columns=["Word", "From", "To", "Label", "Speaker"])
@@ -136,6 +135,7 @@ def get_predictions_start():
 
   print("Start to use in model to get predictions labels")
   general_df = pd.read_pickle(settings.PATH + "Pickles/general_df_4_all_files.pkl") # read the all-words file (including identity)
+  file_name = general_df["ID"].iloc[0]
   words_vectors = pd.read_pickle(settings.PATH + "Pickles/vec/prepared_vectors_2_split-" + file_name + ".pkl") # load the matched vectors 
   all_words_with_predictions = get_predictions(general_df, words_vectors) # get the predictions file
   pd.to_pickle(all_words_with_predictions, settings.PATH + "Pickles/" + file_name +"_with_labels" + ".pkl")
