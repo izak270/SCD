@@ -6,6 +6,7 @@ from matplotlib import pyplot as plt
 from kneed import KneeLocator
 import math
 import settings
+from main.error_rate_checker import get_error_rate
 
 settings.init()
 def kmeans():
@@ -39,6 +40,7 @@ def kmeans():
     gf3['start']=start
     gf3['finish']=finish
     print(gf3,'gf3')
+    pd.to_pickle(gf3, settings.PATH + "Pickles/vec/pkl_with_clusters.pkl")
     fileName = settings.PATH + "main/xlsx/Data_Frame_WithLabels.xlsx"
     workbook = xlsxwriter.Workbook(fileName)
     worksheet = workbook.add_worksheet()
@@ -61,5 +63,7 @@ def kmeans():
     return gf3
 
 def start():
-        return kmeans()
+    error = get_error_rate()
+    print('ERROR: ', error, '%')
+    return kmeans()
 kmeans()
