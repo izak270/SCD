@@ -36,7 +36,7 @@ print(kn.knee)
 km = KMeans(n_clusters=kn.knee)
 y_predicted = km.fit_predict(gf3[my_list])
 y_predicted
-print(y_predicted)
+print(y_predicted,'ypredict')
 print(len(y_predicted))
 gf3['cluster']=y_predicted
 gf3['start']=start
@@ -52,6 +52,11 @@ worksheet.set_column(0, 3, 15)
 worksheet.write(0, 0, "cluster", bold)
 worksheet.write(0, 1, "Start Time", bold)
 worksheet.write(0, 2, "End Time", bold)
+
+plt.xlabel('K')
+plt.ylabel('Sum of squared error')
+plt.plot(k_rng,sse)
+plt.show()
 
 for k in range(0, len(gf3)):
     worksheet.write((k + 1), 0, gf3.iloc[k]['cluster'])

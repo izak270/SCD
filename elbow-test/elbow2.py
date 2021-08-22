@@ -20,7 +20,7 @@ df.head(3)
 km = KMeans(n_clusters=3)
 yp = km.fit_predict(df)
 yp
-
+print(yp,'yp')
 df['cluster'] = yp
 df.head(2)
 
@@ -44,8 +44,6 @@ for k in k_rng:
     print(df)
     sse.append(km.inertia_)
 x = range(1, len(k_rng)+1)
-
-
 kn = KneeLocator(x, sse, curve='convex', direction='decreasing')
 print(kn.knee)
 plt.xlabel('K')

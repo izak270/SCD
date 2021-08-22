@@ -7,10 +7,9 @@ from kneed import KneeLocator
 import math
 import settings
 
-
+settings.init()
 def kmeans():
     df = pd.read_pickle(settings.PATH + 'Pickles/vec/prepared_vectors_2_split-RON_OLGA.pkl')
-    print(df)
     df.head()
     my_list = [i for i in range(256)]
     df2 = df[df['Vectors'].notna()]
@@ -19,6 +18,7 @@ def kmeans():
     gf3 = pd.DataFrame(df2['Vectors'].to_list(), columns=my_list)
     gf3 = gf3[gf3[0].notna()]
     print(gf3)
+    print('asdf',gf3[my_list],'mylistsdasdfsdf')
     sse = []
     k_rng = range(1, len(gf3))
 
@@ -27,13 +27,14 @@ def kmeans():
         km.fit(gf3[my_list])
         sse.append(km.inertia_)
 
+    print(sse)
     x = range(1, len(k_rng)+1)
     kn = KneeLocator(x, sse, curve='convex', direction='decreasing')
     print(kn.knee,'i wish seven')
 
     km = KMeans(n_clusters=kn.knee)
     y_predicted = km.fit_predict(gf3[my_list])
-    y_predicted
+    print(y_predicted,'yy')
     gf3['cluster']=y_predicted
     gf3['start']=start
     gf3['finish']=finish
@@ -48,6 +49,10 @@ def kmeans():
     worksheet.write(0, 1, "Start Time", bold)
     worksheet.write(0, 2, "End Time", bold)
 
+    plt.xlabel('K')
+    plt.ylabel('Sum of squared error')
+    plt.plot(k_rng, sse)
+    plt.show()
     for k in range(0, len(gf3)):
         worksheet.write((k + 1), 0, gf3.iloc[k]['cluster'])
         worksheet.write((k + 1), 1, gf3.iloc[k]['start'])
@@ -57,4 +62,4 @@ def kmeans():
 
 def start():
         return kmeans()
-
+kmeans()
