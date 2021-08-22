@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 from kneed import KneeLocator
 import math
 import settings
-from main.error_rate_checker import get_error_rate
+from error_rate_checker import get_error_rate
 
 settings.init()
 def kmeans():
