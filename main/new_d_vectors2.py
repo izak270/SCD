@@ -137,49 +137,36 @@ def get_size(df):
 	
 
 def create_vectors(df, file_name):
-    #vectors_pkl = pd.DataFrame(index=range(len(df)), columns=range(4))
     random = 0
     j=-1
     # size = 60
-    segments_size = get_size(df)
     size = len(df)
-    vectors_pkl = pd.DataFrame(index = range(segments_size), columns=["From", "To", "Vectors"])
+    vectors_pkl = pd.DataFrame(index=range(size), columns=["From", "To", "Vectors"])
     index_label = 0
-    last_seen_wav_file = AudioSegment.from_wav(settings.PATH + WAV_PATH + file_name + ".interaction.wav")
+    wav_file = AudioSegment.from_wav(PATH + WAV_PATH + file_name + ".interaction.wav")
     for i in range(size):
-      print(str(i) + " index out of: " + str(size))
-
-      if df.iloc[i]["Label"] == "Split":
-          # TODO: change labels as Mano & Revital saving it
+      
+      try:  
+        if df.iloc[i]["Label"] == "Split":
           seg_start_first = df.iloc[index_label]["From"]
           seg_end_first = df.iloc[i]["To"]
-          try:
-            
-            avg_vector_first = get_half_embedding(seg_start_first, seg_end_first, last_seen_wav_file)
-            if avg_vector_first.size == 0 or math.isnan(avg_vector_first[0]):
-                diff = seg_end_first - seg_start_first
-                complementary = 1 - diff
-                complementary = complementary / 2
-                avg_vector_first = get_half_embedding((seg_start_first - complementary), (seg_end_first + complementary), last_seen_wav_file)
-                print("Changed start and end for: " + str(seg_start_first) + " and: " + str(seg_end_first))
-          except Exception as e:
-              print("In exception")
-              random += 1
-              continue
-               
-
           index_label = i+1
           j= j+1
           vectors_pkl.iloc[j][0] = seg_start_first
           vectors_pkl.iloc[j][1] = seg_end_first
+          avg_vector_first = get_half_embedding(seg_start_first, seg_end_first, wav_file)
           vectors_pkl.iloc[j][2] = avg_vector_first
+
+      except Exception as e:
+        random += 1
+        continue
 
     if df.iloc[size-1]["Label"] == "Same":
       seg_start_first = df.iloc[index_label]["From"]
       seg_end_first = df.iloc[size-1]["To"]
       vectors_pkl.iloc[j+1][0] = seg_start_first
       vectors_pkl.iloc[j+1][1] = seg_end_first
-      avg_vector_first = get_half_embedding(seg_start_first, seg_end_first, last_seen_wav_file)
+      avg_vector_first = get_half_embedding(seg_start_first, seg_end_first, wav_file)
       vectors_pkl.iloc[j+1][2] = avg_vector_first
 
     print("Random Vectors: " + str(random))
