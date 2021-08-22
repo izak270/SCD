@@ -5,12 +5,12 @@ from sklearn.preprocessing import MinMaxScaler
 from matplotlib import pyplot as plt
 from kneed import KneeLocator
 import math
+import settings
 
-PATH = "/home/itzhak/SCD/"
 
 def kmeans():
-    df = pd.read_pickle(PATH + 'Pickles/vec/prepared_vectors_2_split-RON_OLGA.pkl')
-    df = pd.read_pickle(PATH + 'Pickles/vec/vector_olga_ron.pkl')
+    df = pd.read_pickle(settings.PATH + 'Pickles/vec/prepared_vectors_2_split-RON_OLGA.pkl')
+    print(df)
     df.head()
     my_list = [i for i in range(256)]
     return  df
