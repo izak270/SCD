@@ -38,24 +38,23 @@ def kmeans():
     gf3['start']=start
     gf3['finish']=finish
     print(gf3,'gf3')
-    return  gf3
-    # fileName = PATH + "main/Data_Frame_WithLabels2.xlsx"
-    # workbook = xlsxwriter.Workbook(fileName)
-    # worksheet = workbook.add_worksheet()
-    # bold = workbook.add_format({'bold': True})
-    # worksheet.set_column(0, 3, 15)
-    #
-    # worksheet.write(0, 0, "cluster", bold)
-    # worksheet.write(0, 1, "Start Time", bold)
-    # worksheet.write(0, 2, "End Time", bold)
-    #
-    # for k in range(0, len(gf3)):
-    #     worksheet.write((k + 1), 0, gf3.iloc[k]['cluster'])
-    #     worksheet.write((k + 1), 1, gf3.iloc[k]['start'])
-    #     worksheet.write((k + 1), 2, gf3.iloc[k]['finish'])
-    # workbook.close()
+    fileName = settings.PATH + "main/xlsx/Data_Frame_WithLabels.xlsx"
+    workbook = xlsxwriter.Workbook(fileName)
+    worksheet = workbook.add_worksheet()
+    bold = workbook.add_format({'bold': True})
+    worksheet.set_column(0, 3, 15)
+
+    worksheet.write(0, 0, "cluster", bold)
+    worksheet.write(0, 1, "Start Time", bold)
+    worksheet.write(0, 2, "End Time", bold)
+
+    for k in range(0, len(gf3)):
+        worksheet.write((k + 1), 0, gf3.iloc[k]['cluster'])
+        worksheet.write((k + 1), 1, gf3.iloc[k]['start'])
+        worksheet.write((k + 1), 2, gf3.iloc[k]['finish'])
+    workbook.close()
+    return gf3
 
 def start():
         return kmeans()
-        return
 

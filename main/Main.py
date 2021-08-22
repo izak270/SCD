@@ -19,6 +19,11 @@ def main():
   return
 
 
+def get_kmeans_data():
+    settings.init()
+    return kmeans_m.start()
+
+
 def pre_process():
     settings.init()
     convert_origin_2_raw_data()

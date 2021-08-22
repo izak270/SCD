@@ -108,7 +108,7 @@ def get_predictions(general_df, words_vectors):
             curr_y_pred.append(prediction_class)
             curr_y_true.append(true_class)
 
-    fileName = settings.PATH + "/Excels/All_Words_With_Speaker_And_Label.xlsx"
+    fileName = settings.PATH + "/main/xlsx/All_Words_With_Speaker_And_Label.xlsx"
     workbook = xlsxwriter.Workbook(fileName)
     worksheet = workbook.add_worksheet()
     bold = workbook.add_format({'bold': True})

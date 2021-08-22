@@ -6,9 +6,11 @@ import os
 from flask import Flask, flash, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from main import Main
-import numpy as np
+import settings
 
-app = Flask(__name__, static_url_path='')
+settings.init()
+
+app = Flask(__name__, static_url_path=settings.PATH + '*')
 api = Api(app)
 
 
@@ -20,10 +22,10 @@ class UploadFile(Resource):
 
 class StartFirstProcess(Resource):
     def get(self):
-        print('start3')
+        print('start3222')
         Main.startFirstProcess()
         try:
-            return send_from_directory(directory='', path='Data_Frame_WithLabels.xlsx', as_attachment=True)
+            return send_from_directory(directory='', path='xlsx/All_Words_With_Speaker_And_Label.xlsx', as_attachment=True)
         except:
             print("Oops!", sys.exc_info(), "occurred.")
             print("Next entry.")
@@ -37,7 +39,7 @@ class StartSecondProcess(Resource):
         print('start second',Resource)
         Main.startSecondProcess()
         try:
-            return send_from_directory(directory='', path='Data_Frame_WithLabels.xlsx', as_attachment=True)
+            return send_from_directory(directory='', path='xlsx/Data_Frame_WithLabels.xlsx', as_attachment=True)
         except:
             print("Oops!", sys.exc_info(), "occurred.")
             print("Next entry.")
@@ -49,7 +51,7 @@ class StartSecondProcess(Resource):
 class GetDataForDiagram(Resource):
     def get(self):
         print('get data for diagram',Resource)
-        x = Main.startMain()
+        x = Main.get_kmeans_data()
         return Response(x.to_json(orient="records"),mimetype="application/json")
         # try:
         #     return send_from_directory(directory='', path='Data_Frame_WithLabels.xlsx', as_attachment=True)
