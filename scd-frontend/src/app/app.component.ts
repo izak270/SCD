@@ -11,12 +11,49 @@ export class AppComponent implements OnInit {
   public showResults = false;
   public showResults2 = false;
   public showLoader = false;
-  public speackers:any
+  public colors = [
+    '#FF6633',
+    '#FFB399',
+    '#FF33FF',
+    '#FFFF99',
+    '#00B3E6',
+    '#E6B333',
+    '#3366E6',
+    '#999966',
+    '#99FF99',
+    '#B34D4D',
+    '#B366CC',
+    '#4D8000',
+    '#B33300',
+    '#CC80CC',
+    '#66664D',
+    '#991AFF',
+    '#E666FF',
+    '#4DB3FF',
+    '#1AB399',
+    '#E666B3',
+    '#33991A',
+    '#6666FF',
+  ];
+  public speackers: any = [
+    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 1 },
+    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 2 },
+    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 3 },
+    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 1 },
+    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 4 },
+    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 2 },
+    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 5 },
+    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 1 },
+    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 4 },
+    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 2 },
+    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 5 },
+    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 1 },
+    { 0: 40.123, 1: 40.313, 2: Array(256), 3: 1 },
+  ];
   public file: any;
   constructor(private httpService: HttpService) {}
 
   ngOnInit() {
-    console.log('in');
   }
   onFileSelected(file: any) {
     this.file = file.files[0];
@@ -71,22 +108,15 @@ export class AppComponent implements OnInit {
       link.setAttribute('download', 'template.xlsx');
       document.body.appendChild(link);
       link.click();
-      const reader = new FileReader()
+      const reader = new FileReader();
       console.log('reader');
-        
-      const file = new File([response],'file')
+
+      const file = new File([response], 'file');
       console.log(file);
       this.httpService.getDataForDiagram().subscribe((ress) => {
         console.log(ress);
-        
-        // const stringRess = JSON.stringify(ress)
-        // console.log(stringRess);
-        this.speackers = ress.toString().replaceAll('}','}$').split('$');
-        console.log(typeof(ress));
-        console.log(this.speackers);
-        
-        // console.log(ress);
-      })
+        this.speackers = ress;
+      });
     });
   }
 }
