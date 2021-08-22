@@ -39,7 +39,7 @@ def first_process():
 def second_process():
     settings.init()
     new_d_vectors2.run_D_vectors()
-    kmeans_m.startk()
+    kmeans_m.start()
     return
 
 

@@ -2,4 +2,4 @@
 
 def init():
     global PATH
-    PATH = "/home/itzhak/SCD"
+    PATH = "/home/itzhak/SCD/"

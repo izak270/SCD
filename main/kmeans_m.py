@@ -13,7 +13,6 @@ def kmeans():
     print(df)
     df.head()
     my_list = [i for i in range(256)]
-    return  df
     df2 = df[df['Vectors'].notna()]
     start = pd.DataFrame(df2['From'].to_list(), columns=['start'])
     finish = pd.DataFrame(df2['To'].to_list(), columns=['finish'])
@@ -30,7 +29,7 @@ def kmeans():
 
     x = range(1, len(k_rng)+1)
     kn = KneeLocator(x, sse, curve='convex', direction='decreasing')
-    print(kn.knee)
+    print(kn.knee,'i wish seven')
 
     km = KMeans(n_clusters=kn.knee)
     y_predicted = km.fit_predict(gf3[my_list])
