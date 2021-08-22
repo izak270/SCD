@@ -51,6 +51,11 @@ p{
     animation: sound 0ms -800ms linear infinite alternate;
 }
 
+h1{
+    text-align: center;
+    width: 100%;
+}
+
 @keyframes sound {
     0% {
        opacity: .35;

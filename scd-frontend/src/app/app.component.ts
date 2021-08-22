@@ -35,9 +35,7 @@ export class AppComponent implements OnInit {
     '#33991A',
     '#6666FF',
   ];
-  public speackers: any = [
-  
-  ];
+  public speackers: any = [ ];
   public files: any;
   constructor(private httpService: HttpService) {}
 
@@ -87,22 +85,17 @@ export class AppComponent implements OnInit {
     console.log('second');
     this.showLoader = true;
     this.httpService.PostSecondProcess().subscribe((response) => {
+      this.speackers = response;
       console.log(response);
-      this.showLoader = false;
-      const url = window.URL.createObjectURL(new Blob([response]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'template.xlsx');
-      document.body.appendChild(link);
-      link.click();
-      const reader = new FileReader();
-      console.log('reader');
-
-      const file = new File([response], 'file');
-      console.log(file);
       this.httpService.getDataForDiagram().subscribe((ress) => {
+        this.showLoader = false;
+        const url = window.URL.createObjectURL(new Blob([ress]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'template.xlsx');
+        document.body.appendChild(link);
+        link.click();
         console.log(ress);
-        this.speackers = ress;
       });
     });
   }

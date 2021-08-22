@@ -36,18 +36,18 @@ export class HttpService {
 
   public PostSecondProcess() {
     let headers = new HttpHeaders({'FileName': 'asd'})
-    return this.http.get(this.baseUrl + 'start_second_process', {
-            headers:
-            {
-                'Content-Disposition': "attachment; filename=template.xlsx",
-                'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-            },
-           responseType: 'blob',
-        })
+    return this.http.get(this.baseUrl + 'start_second_process' )
   }
 
   public getDataForDiagram() {
     let headers = new HttpHeaders({'FileName': 'asd'})
-    return this.http.get(this.baseUrl + 'data_for_diagram', )
+    return this.http.get(this.baseUrl + 'data_for_diagram', {
+      headers:
+      {
+          'Content-Disposition': "attachment; filename=template.xlsx",
+          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      },
+     responseType: 'blob',
+  })
   }
 }

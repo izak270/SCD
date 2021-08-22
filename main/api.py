@@ -53,7 +53,15 @@ class StartFirstProcess(Resource):
 class StartSecondProcess(Resource):
     def get(self):
         print('start second',Resource)
-        Main.startSecondProcess()
+        x = Main.startSecondProcess()
+        return Response(x.to_json(orient="records"), mimetype="application/json")
+
+
+
+class GetXlsx(Resource):
+    def get(self):
+        print('get data for diagram', Resource)
+
         try:
             return send_from_directory(directory='', path='xlsx/Data_Frame_WithLabels.xlsx', as_attachment=True)
         except:
@@ -61,28 +69,12 @@ class StartSecondProcess(Resource):
             print("Next entry.")
             print()
 
-        # return ('Data_Frame_WithLabels.xlsx')
-
-
-class GetDataForDiagram(Resource):
-    def get(self):
-        print('get data for diagram',Resource)
-        x = Main.get_kmeans_data()
-        return Response(x.to_json(orient="records"),mimetype="application/json")
-        # try:
-        #     return send_from_directory(directory='', path='Data_Frame_WithLabels.xlsx', as_attachment=True)
-        # except:
-        #     print("Oops!", sys.exc_info(), "occurred.")
-        #     print("Next entry.")
-        #     print()
-
-        # return ('Data_Frame_WithLabels.xlsx')
 
 
 api.add_resource(UploadFile, "/upload_file")
 api.add_resource(StartFirstProcess, "/start_first_process")
 api.add_resource(StartSecondProcess, "/start_second_process")
-api.add_resource(GetDataForDiagram, "/data_for_diagram")
+api.add_resource(GetXlsx, "/data_for_diagram")
 
 # if __name__ == "__main__":
 app.run(debug=True)
