@@ -123,23 +123,23 @@ def get_predictions(general_df, words_vectors):
     worksheet.write(0, 4, "Speaker", bold)
 
     for k in range(len(all_words_with_predictions)):
-        for j in range(0, 5):
-			try: 
-				worksheet.write((k + 1), j, all_words_with_predictions.iloc[k][j])
-			except:
-				pass
+      for j in range(0, 5):
+        try: 
+          worksheet.write((k + 1), j, all_words_with_predictions.iloc[k][j])
+        except:
+          pass
 
-	print("Created All_Words_With_Speaker_And_Label.xlsx in Excels folder - all words with true speaker and predicted label")
+    print("Created All_Words_With_Speaker_And_Label.xlsx in Excels folder - all words with true speaker and predicted label")
     workbook.close()
     return all_words_with_predictions 
 
 def get_predictions_start():
 
-	print("Start to use in model to get predictions labels")
-	general_df = pd.read_pickle(PATH + "Pickles/general_df_4_all_files.pkl") # read the all-words file (including identity)
-	words_vectors = pd.read_pickle(PATH + "Pickles/vec/prepared_vectors_2_split-" + file_name + ".pkl") # load the matched vectors 
-	all_words_with_predictions = get_predictions(general_df, words_vectors) # get the predictions file
-	pd.to_pickle(all_words_with_predictions, PATH + "Pickles/" + file_name +"_with_labels" + ".pkl")
-    print("Done with labels for all words - saved in " + PATH + "Pickles/" + file_name +"_with_labels" + ".pkl")
+  print("Start to use in model to get predictions labels")
+  general_df = pd.read_pickle(PATH + "Pickles/general_df_4_all_files.pkl") # read the all-words file (including identity)
+  words_vectors = pd.read_pickle(PATH + "Pickles/vec/prepared_vectors_2_split-" + file_name + ".pkl") # load the matched vectors 
+  all_words_with_predictions = get_predictions(general_df, words_vectors) # get the predictions file
+  pd.to_pickle(all_words_with_predictions, PATH + "Pickles/" + file_name +"_with_labels" + ".pkl")
+  print("Done with labels for all words - saved in " + PATH + "Pickles/" + file_name +"_with_labels" + ".pkl")
 	
-	return 
+  return 

@@ -206,13 +206,13 @@ def create_vectors_excel():
 
   try:
     for k in range(len(data_df2)):
-        worksheet.write((k + 1), 0, k)
-        worksheet.write((k + 1), 1, data_df2.iloc[k]["From"])
-        worksheet.write((k + 1), 2, data_df2.iloc[k]["To"])
-        vector_array = data_df2.iloc[k]["Vectors"]
-        if not isinstance(vector_array, float):
-            for j in range (len(vector_array)):
-                worksheet.write((k + 1), (j+3), str(vector_array[j]))
+      worksheet.write((k + 1), 0, k)
+      worksheet.write((k + 1), 1, data_df2.iloc[k]["From"])
+      worksheet.write((k + 1), 2, data_df2.iloc[k]["To"])
+      vector_array = data_df2.iloc[k]["Vectors"]
+      if not isinstance(vector_array, float):
+        for j in range (len(vector_array)):
+          worksheet.write((k + 1), (j+3), str(vector_array[j]))
   except:
     pass
               
@@ -222,16 +222,16 @@ def create_vectors_excel():
 
 def run_D_vectors():
 
-	print("Second component start: creating voice vectors from words labels predictions")
-    data_df = pd.read_pickle(PATH + PICKLE_PATH)
-    data_df = pd.read_pickle(PATH + PICKLE_PATH)
-    curr_data = create_vectors(data_df)
-	create_vectors_excel()
-	print("Done - second component - file was saved in:" + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
-    pd.to_pickle(curr_data, PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
-    # data_df2 = pd.read_pickle(PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
-    # print(data_df2.to_string())
-    return
+  print("Second component start: creating voice vectors from words labels predictions")
+  data_df = pd.read_pickle(PATH + PICKLE_PATH)
+  data_df = pd.read_pickle(PATH + PICKLE_PATH)
+  curr_data = create_vectors(data_df)
+  create_vectors_excel()
+  print("Done - second component - file was saved in:" + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
+  pd.to_pickle(curr_data, PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
+  # data_df2 = pd.read_pickle(PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
+  # print(data_df2.to_string())
+  return
 
 embedder_net = SpeechEmbedder()
 embedder_net.load_state_dict(torch.load(hp.model.model_path))
