@@ -8,14 +8,16 @@ import math
 import settings
 from error_rate_checker import get_error_rate
 
+
+
 settings.init()
 def kmeans():
     df = pd.read_pickle(settings.PATH + 'Pickles/vec/prepared_vectors_2_split-RON_OLGA.pkl')
     df.head()
     my_list = [i for i in range(256)]
     df2 = df[df['Vectors'].notna()]
-    start = pd.DataFrame(df2['From'].to_list(), columns=['start'])
-    finish = pd.DataFrame(df2['To'].to_list(), columns=['finish'])
+    start = pd.DataFrame(df2['From'].to_list(), columns=['From'])
+    finish = pd.DataFrame(df2['To'].to_list(), columns=['To'])
     gf3 = pd.DataFrame(df2['Vectors'].to_list(), columns=my_list)
     gf3 = gf3[gf3[0].notna()]
     print(gf3)
@@ -37,8 +39,8 @@ def kmeans():
     y_predicted = km.fit_predict(gf3[my_list])
     print(y_predicted,'yy')
     gf3['cluster']=y_predicted
-    gf3['start']=start
-    gf3['finish']=finish
+    gf3['From']=start
+    gf3['To']=finish
     print(gf3,'gf3')
     pd.to_pickle(gf3, settings.PATH + "Pickles/vec/pkl_with_clusters.pkl")
     fileName = settings.PATH + "main/xlsx/Data_Frame_WithLabels.xlsx"
@@ -57,12 +59,16 @@ def kmeans():
     # plt.show()
     for k in range(0, len(gf3)):
         worksheet.write((k + 1), 0, gf3.iloc[k]['cluster'])
-        worksheet.write((k + 1), 1, gf3.iloc[k]['start'])
-        worksheet.write((k + 1), 2, gf3.iloc[k]['finish'])
+        worksheet.write((k + 1), 1, gf3.iloc[k]['From'])
+        worksheet.write((k + 1), 2, gf3.iloc[k]['To'])
     workbook.close()
     return gf3
 
 def start():
-    # error = get_error_rate()
-    # print('ERROR: ', error, '%')
-    return kmeans()
+    kmeans()
+    general_df = pd.read_pickle(settings.PATH + "Pickles/general_df_4_all_files.pkl")
+    file_name = general_df["ID"].iloc[0]
+    error = get_error_rate(settings.PATH + "Pickles/" + file_name + "_with_labels.pkl" , settings.PATH + "Pickles/vec/pkl_with_clusters.pkl")
+    print('ERROR: ', error, '%')
+  
+     
