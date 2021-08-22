@@ -4,6 +4,74 @@
 
 .process_one_container{
     display:  flex;
-    flex-direction:  row;
+    flex-direction:  column;
     justify-content: space-evenly;
 }
+
+img{
+    width: 150px;
+    height: 150px;
+}
+
+.spickersContainer{
+    display: flex;
+    height: 55px;
+    width: 100%;
+    margin-top: 100px;
+}
+
+.spescker{
+    width: 100%;
+    height: 100%;
+}
+
+.soundWave{
+    height: 70%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+p{
+    margin: unset;
+    text-align: center;
+}
+
+#bars {
+    height: 30px;
+    position: relative;
+    width: 52px;
+}
+
+.bar {
+    height: 3px;
+    position: absolute;
+    width: 3px;      
+    animation: sound 0ms -800ms linear infinite alternate;
+}
+
+@keyframes sound {
+    0% {
+       opacity: .35;
+        height: 3px; 
+    }
+    100% {
+        opacity: 1;       
+        height: 28px;        
+    }
+}
+
+.bar:nth-child(1)  { left: 1px; animation-duration: 474ms; }
+.bar:nth-child(2)  { left: 5px; animation-duration: 433ms; }
+.bar:nth-child(3)  { left: 9px; animation-duration: 407ms; }
+.bar:nth-child(4)  { left: 13px; animation-duration: 458ms; }
+.bar:nth-child(5)  { left: 17px; animation-duration: 400ms; }
+.bar:nth-child(6)  { left: 21px; animation-duration: 427ms; }
+.bar:nth-child(7)  { left: 25px; animation-duration: 441ms; }
+.bar:nth-child(8)  { left: 29px; animation-duration: 419ms; }
+.bar:nth-child(9)  { left: 33px; animation-duration: 398ms; }
+.bar:nth-child(10)  { left: 37px; animation-duration: 422ms; }
+.bar:nth-child(11)  { left: 41px; animation-duration: 433ms; }
+.bar:nth-child(12)  { left: 45px; animation-duration: 412ms; }
+.bar:nth-child(13)  { left: 48px; animation-duration: 499ms; }
+.bar:nth-child(14)  { left: 52px; animation-duration: 487ms; }

@@ -19,7 +19,7 @@ def main():
   return
 
 def startMain():
-    main()
+    return main()
 #
 if __name__ == "__main__":
     main()

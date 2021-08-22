@@ -13,7 +13,7 @@ def kmeans():
     print(df)
     df.head()
     my_list = [i for i in range(256)]
-
+    return  df
     df2 = df[df['Vectors'].notna()]
     start = pd.DataFrame(df2['From'].to_list(), columns=['start'])
     finish = pd.DataFrame(df2['To'].to_list(), columns=['finish'])
@@ -38,9 +38,9 @@ def kmeans():
     gf3['cluster']=y_predicted
     gf3['start']=start
     gf3['finish']=finish
-    print(gf3)
-
-    # fileName = settings.PATH + "main/Data_Frame_WithLabels2.xlsx"
+    print(gf3,'gf3')
+    return  gf3
+    # fileName = PATH + "main/Data_Frame_WithLabels2.xlsx"
     # workbook = xlsxwriter.Workbook(fileName)
     # worksheet = workbook.add_worksheet()
     # bold = workbook.add_format({'bold': True})
@@ -56,7 +56,7 @@ def kmeans():
     #     worksheet.write((k + 1), 2, gf3.iloc[k]['finish'])
     # workbook.close()
 
-def startk():
-        kmeans()
+def start():
+        return kmeans()
         return
 

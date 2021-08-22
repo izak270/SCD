@@ -19,8 +19,10 @@
     "lib": [
       "es2018",
       "dom",
-      "Scripthost"
-    ]
+      "Scripthost",
+      "ESNext.String"
+    ],
+    "types": ["node"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
