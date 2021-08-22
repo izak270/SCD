@@ -6,8 +6,9 @@ import itertools
 from time import gmtime, strftime
 from bert_embedding import BertEmbedding
 from pathlib import Path
+import xlsxwriter
+import settings
 
-PATH = "/home/itzhak/SCD/"
 
 class WordObject:
     def __init__(self, fn, w, start, end, speaker):
@@ -18,7 +19,10 @@ class WordObject:
         self.speaker = speaker
 
 def convert_origin_2_raw_data():
-  os.chdir(PATH + "words") #current path
+  
+  print("Starting to read xml files...")
+  
+  os.chdir(settings.PATH + "words") #current path
   all_file_name = glob.glob("*.xml")# returns a list of all files that matches the "*.xml" pattern
   all_file_name.sort(key=lambda x: os.path.getmtime(x)) # sort the files by the time they were last changed
 
@@ -35,7 +39,7 @@ def convert_origin_2_raw_data():
 
       file_words = []
 
-      tree = ET.parse(PATH + "words/" + f_name)
+      tree = ET.parse(settings.PATH + "words/" + f_name)
       root = tree.getroot()
 
       file_id = f_name.split(".")[0] # unique file name
@@ -67,13 +71,17 @@ def convert_origin_2_raw_data():
 
           files_set[file_id].append(file_words)
 # files_set is a dictionary of file names = keys and lists where the list are all words as objects (id, start, end, word)
-  pd.to_pickle(files_set, PATH + "Pickles/files_df.pkl") # from list of lists to pickle file
-  print("Finish with origin")
+  pd.to_pickle(files_set, settings.PATH + "Pickles/files_df.pkl") # from list of lists to pickle file
+  
+  print("Done with xml files processing.")
+  
   return
 
 def convert_raw_data_2_data_frame():
-  print("start with raw data")
-  raw_data = pd.read_pickle(PATH + "Pickles/files_df.pkl") # from pickle to list of lists
+
+  print("Start to concatenate all files to 1 data set")
+  
+  raw_data = pd.read_pickle(settings.PATH + "Pickles/files_df.pkl") # from pickle to list of lists
 
   general_df = pd.DataFrame(columns=["ID", "Word", "From", "To", "Speaker"]) # initialize new data frame object with the specified column names
 
@@ -100,19 +108,36 @@ def convert_raw_data_2_data_frame():
 
       count += 1
       general_df = pd.concat([general_df, curr_file_df], ignore_index=True) # add the current file data frame to the general data frame
-      print("Done " + str(count) + " files, out of: " + str(size))
+     
 
   print("Original Length: " + str(len(general_df))) # print the length of the general data frame - all inserted files
   general_df = general_df.dropna()#dropna = drop not available
   print("After dropna Length: " + str(len(general_df)))
+  
+  fileName = settings.PATH + "Excels/current_run_all_words_and_speakers.xlsx"
+  workbook = xlsxwriter.Workbook(fileName)
+  worksheet = workbook.add_worksheet()
+  bold = workbook.add_format({'bold': True})
+  worksheet.set_column(0, 5, 15)
+    
+  columns_names= ['ID', 'WORD', 'FROM', 'TO', 'SPEAKER']
 
-  pd.to_pickle(general_df, PATH + "Pickles/general_df_4_all_files.pkl") # from data frame to pickle
-  print("Finish with raw data")
+  for r in range(5):
+    worksheet.write(0, r, columns_names[r], bold)
+
+  for k in range(len(general_df)):
+      for j in range(0, 5):
+          worksheet.write((k + 1), j, general_df.iloc[k][j])
+  workbook.close() 
+  
+  print("Created current_run_all_words_and_speakers.xlsx in Excels folder - contains all words and the true speakers")
+  pd.to_pickle(general_df, settings.PATH + "Pickles/general_df_4_all_files.pkl") # from data frame to pickle
+  print("Done - 1 data set")
   return
 
 def convert_df_2_pkl():
-  print("Start with data frame process")
-  df = pd.read_pickle(PATH + "Pickles/general_df_4_all_files.pkl")#back to data frame
+  print("Deviding all words to segments of 6")
+  df = pd.read_pickle(settings.PATH + "Pickles/general_df_4_all_files.pkl")#back to data frame
 
   id_list = sorted(list(set(df["ID"]))) # extract to list all the file names (from if ID column in the data frame)
 
@@ -196,12 +221,10 @@ def convert_df_2_pkl():
           data_to_convert_df = data_to_convert_df.append(example_df) # add the two 2 segments to the general data frame
 
       cntr += 1
-      # print when we finish a file
-      print(str(cntr) + " Out of: " + str(len(id_list)) + "    " + str(strftime("%Y-%m-%d %H:%M:%S", gmtime())))
 
       # here each 10 files we divide to pickle
       if 0 == cntr % 10:
-          pd.to_pickle(data_to_convert_df, PATH + "Pickles/Concat/" + str(cntr) + "-data_to_convert_df_speech_text_hybrid.pkl")
+          pd.to_pickle(data_to_convert_df, settings.PATH + "Pickles/Concat/" + str(cntr) + "-data_to_convert_df_speech_text_hybrid.pkl")
 
           data_to_convert_df = pd.DataFrame(columns=['ID', 'First_Word', 'Second_Word', 'Third_Word',
                                            'Fourth_Word', 'Fifth_Word', 'Sixth_Word',
@@ -212,13 +235,13 @@ def convert_df_2_pkl():
                                            'Segment_Start', 'Segment_Middle_1', 'Segment_Middle_2', 'Segment_End',
                                            'Space_3_4', 'Label'])
 
-  pd.to_pickle(data_to_convert_df, PATH + "Pickles/Concat/" + "last_data_to_convert_df_speech_text_hybrid.pkl")
-  print("Finish with data frame process")
+  pd.to_pickle(data_to_convert_df, settings.PATH + "Pickles/Concat/" + "last_data_to_convert_df_speech_text_hybrid.pkl")
+  print("Done with words segments")
   return
 
 def bert_w2v_mapper():
   print("Start to make bert dictionary")
-  df = pd.read_pickle(PATH + "Pickles/general_df_4_all_files.pkl") #we take general_df because in general_df... file we have all words ordered in a data frame
+  df = pd.read_pickle(settings.PATH + "Pickles/general_df_4_all_files.pkl") #we take general_df because in general_df... file we have all words ordered in a data frame
   words = sorted(list(set(list(df["Word"])))) # get a list from the data frame under the column Word - a list of all words
 
   words_dictionary = {}
@@ -232,39 +255,26 @@ def bert_w2v_mapper():
       index += 1
       print(index)
 
-  pd.to_pickle(words_dictionary, PATH + "Models/Word2Vec/bert_w2v_dictionary.pkl") # a dictionary converted to pickle - to use in the vector part
+  pd.to_pickle(words_dictionary, settings.PATH + "Models/Word2Vec/bert_w2v_dictionary.pkl") # a dictionary converted to pickle - to use in the vector part
   print("Finish with Bert dictionary")
   return
 
 def finally_concat_pickles():
-  print("Start to concatenate Pickles")
   # list of all files from "convert_df_2_pkl.py" -
-  paths = sorted(Path(PATH + "Pickles/Concat/").iterdir(), key=os.path.getmtime)
+  paths = sorted(Path(settings.PATH + "Pickles/Concat/").iterdir(), key=os.path.getmtime)
 
   # initial_df is the first file
-  initial_df = pd.read_pickle(PATH + "Pickles/Concat/" + paths[0].name)
+  initial_df = pd.read_pickle(settings.PATH + "Pickles/Concat/" + paths[0].name)
 
   # here concatenate all file to one final - "raw_data_2_convert_2_embeddings.pkl"
   for i in range(1, len(paths)):
-      curr_pkl = pd.read_pickle(PATH + "Pickles/Concat/" + paths[i].name)
+      curr_pkl = pd.read_pickle(settings.PATH + "Pickles/Concat/" + paths[i].name)
       initial_df = pd.concat([initial_df, curr_pkl])# concatenate DFs to initial_df
 
-  pd.to_pickle(initial_df, PATH + "Pickles/raw_data_2_convert_2_embeddings.pkl")
-  print("Finish to concatenate Pickles")
+  pd.to_pickle(initial_df, settings.PATH + "Pickles/raw_data_2_convert_2_embeddings.pkl")
   return
 
-  from pre_process_utils import convert_origin_2_raw_data
-
-def main():
-  convert_origin_2_raw_data()
-  convert_raw_data_2_data_frame()
-  convert_df_2_pkl()
-  bert_w2v_mapper()
-  finally_concat_pickles()
-  return
-
-if __name__ == "__main__":
-    main()
+ 
 
 
 

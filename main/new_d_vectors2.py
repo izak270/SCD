@@ -6,18 +6,18 @@ import pandas as pd
 import  time
 from pydub import AudioSegment
 from time import gmtime, strftime
-
+import xlsxwriter
+import math
+import settings
 from hparam import hparam as hp
 from VAD_segments import VAD_chunk
 from speech_embedder_net import SpeechEmbedder
 
 # TODO: talk with other groups about files addresses & data saving conv
 # TODO: change addresses
-PATH = "/home/itzhak/SCD/"
-PICKLE_PATH = "Pickles/Bed003_with_labels.pkl"
-WAV_PATH = "Signals/"
-WAV_NAME = "Bed003.interaction.wav"
 
+
+WAV_PATH = "Signals/"
 FINALE_PICKLE_NAME = "RON_OLGA"
 
 W2V_VECTOR_LENGTH = 768
@@ -113,7 +113,7 @@ def get_half_embedding(segment_start, segment_end, the_wav):
     seg_end = float(segment_end) * 1000
 
     sub_sample = the_wav[seg_start:seg_end]
-    file_2_create = PATH + "temp_wav_file.wav"
+    file_2_create = settings.PATH + "temp_wav_file.wav"
     sub_sample.export(file_2_create, format="wav")
 
     voice_embedding_vectors = get_average_voice_embedding(file_2_create)
@@ -126,34 +126,53 @@ def get_half_embedding(segment_start, segment_end, the_wav):
     avg_vector = avg_vector / len(voice_embedding_vectors)
 
     return avg_vector
+	
+def get_size(df):
 
+    counter = 0;
+    for i in range(len(df)):
+       if df.iloc[i]["Label"] == "Split":
+         counter= counter+1   
+    return (counter+1)
+	
 
-def create_vectors(df):
+def create_vectors(df, file_name):
     #vectors_pkl = pd.DataFrame(index=range(len(df)), columns=range(4))
     random = 0
     j=-1
     # size = 60
+    segments_size = get_size(df)
     size = len(df)
-    vectors_pkl = pd.DataFrame(index = range(size), columns=["From", "To", "Vectors"])
+    vectors_pkl = pd.DataFrame(index = range(segments_size), columns=["From", "To", "Vectors"])
     index_label = 0
-    last_seen_wav_file = AudioSegment.from_wav(PATH + WAV_PATH + WAV_NAME)
+    last_seen_wav_file = AudioSegment.from_wav(settings.PATH + WAV_PATH + file_name + ".interaction.wav")
     for i in range(size):
-      
-      try:  
-        if df.iloc[i]["Label"] == "Split":
+      print(str(i) + " index out of: " + str(size))
+
+      if df.iloc[i]["Label"] == "Split":
           # TODO: change labels as Mano & Revital saving it
           seg_start_first = df.iloc[index_label]["From"]
           seg_end_first = df.iloc[i]["To"]
+          try:
+            
+            avg_vector_first = get_half_embedding(seg_start_first, seg_end_first, last_seen_wav_file)
+            if avg_vector_first.size == 0 or math.isnan(avg_vector_first[0]):
+                diff = seg_end_first - seg_start_first
+                complementary = 1 - diff
+                complementary = complementary / 2
+                avg_vector_first = get_half_embedding((seg_start_first - complementary), (seg_end_first + complementary), last_seen_wav_file)
+                print("Changed start and end for: " + str(seg_start_first) + " and: " + str(seg_end_first))
+          except Exception as e:
+              print("In exception")
+              random += 1
+              continue
+               
+
           index_label = i+1
           j= j+1
           vectors_pkl.iloc[j][0] = seg_start_first
           vectors_pkl.iloc[j][1] = seg_end_first
-          avg_vector_first = get_half_embedding(seg_start_first, seg_end_first, last_seen_wav_file)
           vectors_pkl.iloc[j][2] = avg_vector_first
-
-      except Exception as e:
-        random += 1
-        continue
 
     if df.iloc[size-1]["Label"] == "Same":
       seg_start_first = df.iloc[index_label]["From"]
@@ -166,15 +185,53 @@ def create_vectors(df):
     print("Random Vectors: " + str(random))
 
     return vectors_pkl
+	
+def create_vectors_excel():
+
+  data_df2 = pd.read_pickle(settings.PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
+  fileName = settings.PATH + "/Excels/Segments_vectors_Ron_Olga.xlsx"
+  workbook = xlsxwriter.Workbook(fileName)
+  worksheet = workbook.add_worksheet()
+  bold = workbook.add_format({'bold': True})
+  worksheet.set_column(0, 260, 15)
+
+  worksheet.write(0, 0, "Index", bold)
+  worksheet.write(0, 1, "Start Segment", bold)
+  worksheet.write(0, 2, "Segment End", bold)
+
+  for k in range(3,259):
+      worksheet.write(0, k, "vector_" + str(k-3), bold)
+
+  try:
+    for k in range(len(data_df2)):
+      worksheet.write((k + 1), 0, k)
+      worksheet.write((k + 1), 1, data_df2.iloc[k]["From"])
+      worksheet.write((k + 1), 2, data_df2.iloc[k]["To"])
+      vector_array = data_df2.iloc[k]["Vectors"]
+      if not isinstance(vector_array, float):
+        for j in range (len(vector_array)):
+          worksheet.write((k + 1), (j+3), str(vector_array[j]))
+  except:
+    pass
+              
+  workbook.close()
+  return
 
 
 def run_D_vectors():
-    data_df = pd.read_pickle(PATH + PICKLE_PATH)
-    curr_data = create_vectors(data_df)
-    pd.to_pickle(curr_data, PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
-    # data_df2 = pd.read_pickle(PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
-    # print(data_df2.to_string())
-    return
+
+  print("Second component start: creating voice vectors from words labels predictions")
+  
+  general_df = pd.read_pickle(settings.PATH + "Pickles/general_df_4_all_files.pkl")
+  file_name = general_df["ID"].iloc[0]
+  data_df = pd.read_pickle(settings.PATH + "Pickles/" + file_name + "_with_labels.pkl")
+  curr_data = create_vectors(data_df, file_name)
+  pd.to_pickle(curr_data, settings.PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")  
+  print("Done - second component - file was saved in:" + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")  
+  create_vectors_excel()
+  # data_df2 = pd.read_pickle(settings.PATH + "Pickles/vec/prepared_vectors_2_split-" + FINALE_PICKLE_NAME + ".pkl")
+  # print(data_df2.to_string())
+  return
 
 embedder_net = SpeechEmbedder()
 embedder_net.load_state_dict(torch.load(hp.model.model_path))
