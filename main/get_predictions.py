@@ -65,7 +65,7 @@ def get_predictions(general_df, words_vectors):
 
     os.chdir(settings.PATH + "Models/Neural/")
     all_models_name = glob.glob("*.pth")
-    all_models_name.sort(key=lambda x: os.PATH.getmtime(x))
+    all_models_name.sort(key=lambda x: os.path.getmtime(x))
 
     results = []
 
