@@ -8,9 +8,9 @@ import math
 import settings
 from error_rate_checker import get_error_rate
 
-
-
 settings.init()
+
+
 def kmeans():
     df = pd.read_pickle(settings.PATH + 'Pickles/vec/prepared_vectors_2_split-RON_OLGA.pkl')
     df.head()
@@ -24,10 +24,10 @@ def kmeans():
 
     print("Data frame length: " + str(len(gf3)))
 
-    if len(gf3) > 50:  
-      k_rng = range(1, 50)
+    if len(gf3) > 50:
+        k_rng = range(1, 50)
     else:
-      k_rng = range(1, len(gf3))
+        k_rng = range(1, len(gf3))
 
     for k in k_rng:
         print(k)
@@ -35,16 +35,16 @@ def kmeans():
         km.fit(gf3[my_list])
         sse.append(km.inertia_)
 
-    x = range(1, len(k_rng)+1)
+    x = range(1, len(k_rng) + 1)
     kn = KneeLocator(x, sse, curve='convex', direction='decreasing')
     print("Number of clusters: " + str(kn.knee))
 
     km = KMeans(n_clusters=kn.knee)
     y_predicted = km.fit_predict(gf3[my_list])
-    print(y_predicted,'yy')
-    gf3['cluster']=y_predicted
-    gf3['From']=start
-    gf3['To']=finish
+    print(y_predicted, 'yy')
+    gf3['cluster'] = y_predicted
+    gf3['From'] = start
+    gf3['To'] = finish
     pd.to_pickle(gf3, settings.PATH + "Pickles/vec/pkl_with_clusters.pkl")
     fileName = settings.PATH + "main/xlsx/Data_Frame_With_Labels_And_Clusters.xlsx"
     workbook = xlsxwriter.Workbook(fileName)
@@ -67,10 +67,12 @@ def kmeans():
     workbook.close()
     return gf3
 
+
 def start():
-    kmeans()
+    data = kmeans()
     general_df = pd.read_pickle(settings.PATH + "Pickles/general_df_4_all_files.pkl")
     file_name = general_df["ID"].iloc[0]
-    error = get_error_rate(settings.PATH + "Pickles/" + file_name + "_with_labels.pkl" , settings.PATH + "Pickles/vec/pkl_with_clusters.pkl")
+    error = get_error_rate(settings.PATH + "Pickles/" + file_name + "_with_labels.pkl",
+                           settings.PATH + "Pickles/vec/pkl_with_clusters.pkl")
     print('ERROR: ', error, '%')
-  
+    return data

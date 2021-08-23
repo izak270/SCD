@@ -66,6 +66,12 @@ export class AppComponent implements OnInit {
     });
   }
 
+  startPreprocess(){
+    this.httpService.preprocess().subscribe(data=>{
+      console.log(data);
+    })
+  }
+
   startProcess() {
     console.log('startProcess');
     this.showLoader = true;

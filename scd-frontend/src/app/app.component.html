@@ -2,6 +2,8 @@
 <div class="process_one_container">
   <input type="file" name='file' (change)="onFileSelected($event.target)" multiple/>
   <img *ngIf="showLoader" src="../assets/loading.gif" alt="" />
+  <button (click)="startPreprocess()">pre process</button>
+
   <button (click)="startProcess()">first process</button>
   <button (click)="startSecondProcess()">second process</button>
   <div class="spickersContainer">

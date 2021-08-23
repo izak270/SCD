@@ -22,6 +22,10 @@ export class HttpService {
     )
   }
 
+  public preprocess() {
+    return this.http.get(this.baseUrl + 'preprocess')
+  }
+
   public PostFirstProcess() {
   
     return this.http.get(this.baseUrl + 'start_first_process', {

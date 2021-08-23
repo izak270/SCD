@@ -47,9 +47,7 @@ def second_process():
     return kmeans_m.start()
 
 
-
-
-def startSpreProcess():
+def startPreProcess():
     return pre_process()
 
 

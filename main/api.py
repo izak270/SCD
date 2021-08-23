@@ -32,8 +32,18 @@ class UploadFile(Resource):
             print("Next entry.")
             print()
 
-        # Main.startSpreProcess()
-        return {"data": "upload file"}
+
+class StartPreProcess(Resource):
+    def get(self):
+        print('start preprocess')
+        try:
+            Main.startPreProcess()
+            return 'Finish pre process'
+        except:
+            print("Oops!", sys.exc_info(), "occurred.")
+            print("Next entry.")
+            print()
+            return sys.exc_info()
 
 
 class StartFirstProcess(Resource):
@@ -47,7 +57,7 @@ class StartFirstProcess(Resource):
             print("Next entry.")
             print()
 
-        return ('Data_Frame_WithLabels.xlsx')
+
 
 
 class StartSecondProcess(Resource):
@@ -69,6 +79,7 @@ class GetXlsx(Resource):
             print()
 
 
+api.add_resource(StartPreProcess, "/preprocess")
 api.add_resource(UploadFile, "/upload_file")
 api.add_resource(StartFirstProcess, "/start_first_process")
 api.add_resource(StartSecondProcess, "/start_second_process")

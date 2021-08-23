@@ -26,7 +26,6 @@
    <w nite:id="Bmr020.w.258" starttime="47.1" endtime="47.35" c="W">Where</w>
    <w nite:id="Bmr020.w.259" starttime="47.35" endtime="47.59" c="W">like</w>
    <w nite:id="Bmr020.w.260" starttime="47.59" endtime="47.66" c="W">you</w>
-   <!--
    <w nite:id="Bmr020.w.261" starttime="47.66" endtime="47.93" c="W">just</w>
    <w nite:id="Bmr020.w.262" starttime="47.93" endtime="48.21" c="W">don't</w>
    <disfmarker nite:id="Bmr020.disfmarker.10" starttime="" endtime=""/>
@@ -394,5 +393,4 @@
    <comment nite:id="Bmr020.comment.214" starttime="" endtime="" description="quietly"/>
    <nonvocalsound nite:id="Bmr020.nonvocalsound.63" starttime="" endtime="" description="mike noise"/>
    <comment nite:id="Bmr020.comment.383" starttime="" endtime="" description="Censored"/>
-   -->
 </nite:root>
