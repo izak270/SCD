@@ -27,6 +27,7 @@ class UploadFile(Resource):
                     print('wav')
                     file.save(settings.PATH+'Signals/'+file.filename)
             Main.startSpreProcess()
+            return 'Finish preprocess'
         except:
             print("Oops!", sys.exc_info(), "occurred.")
             print("Next entry.")

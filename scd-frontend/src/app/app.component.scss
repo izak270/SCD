@@ -5,7 +5,7 @@
 .process_one_container{
     display:  flex;
     flex-direction:  column;
-    justify-content: space-evenly;
+    align-items: center;
 }
 
 img{
@@ -54,6 +54,12 @@ p{
 h1{
     text-align: center;
     width: 100%;
+}
+
+button, input{
+    width: 20%;
+    margin: 10px;
+    height: 40px;
 }
 
 @keyframes sound {
