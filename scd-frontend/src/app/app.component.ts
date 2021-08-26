@@ -36,20 +36,16 @@ export class AppComponent implements OnInit {
     '#6666FF',
   ];
   public speakers: any = [ 
-    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
-    { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
-    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
     { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
-    { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },
-    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
-    { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
-    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+    { "From": 44.313, "To": 45.313, 2: Array(256), 'cluster': 2 },    
+    { "From": 45.313, "To": 46.313, 2: Array(256), 'cluster': 2 },
+    { "From": 46.123, "To": 48.313, 2: Array(256), 'cluster': 1 },
+    { "From": 48.123, "To": 51.313, 2: Array(256), 'cluster': 4 },
+    { "From": 51.123, "To": 53.313, 2: Array(256), 'cluster': 2 },    
+    { "From": 53.123, "To": 55.313, 2: Array(256), 'cluster': 2 },
+    { "From": 55.123, "To": 57.313, 2: Array(256), 'cluster': 1 },
     { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
-    { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
-    { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
-    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
-    { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
-    { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+    { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },   
     { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
     { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
     { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
@@ -68,24 +64,28 @@ export class AppComponent implements OnInit {
     { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
     { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
     { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
-    { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
-    { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
-    { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
-    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
-    { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
-    { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },
+    { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 1 },
+    { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 1 },
 
   ];
   public files: any;
   constructor(private httpService: HttpService) {}
-
   ngOnInit() {
+    const toSplice:any = []
    this.speakers.forEach((element, index) => {
       if(index>0&&this.speakers[index-1]['cluster']===element['cluster']){
-        element['From']=this.speakers[index-1]['From']
-        this.speakers.splice(index, 1);
+        console.log('for');
+        this.speakers[index]['From']=this.speakers[index-1]['From']
+        this.speakers[index-1]=0
       }
+      
     });
+    this.speakers=this.speakers.filter(item=>{
+      console.log(item);
+      return item != 0
+    })
+    console.log(this.speakers);
+    
   }
   onFileSelected(target: any) {
     this.files = target.files;
@@ -93,9 +93,8 @@ export class AppComponent implements OnInit {
     this.uploadFile(this.files);
   }
 
-  uploadFile(files) {
-    console.log(typeof files['FileList']);
-    const filelist = [];
+  uploadFile(files: any) {
+    let filelist: any = [];
     let formData: FormData = new FormData();
     for (var i = 0; i < files.length; ++i) {
       filelist[i] = files.item(i).name;

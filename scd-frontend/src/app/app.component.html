@@ -8,16 +8,17 @@
   <button (click)="startSecondProcess()">second process</button>
   <div class="spickersContainer">
     <div  *ngFor="let speaker of speakers; let i = index"  class="spescker">
-      <div *ngIf="i>0&&!(speaker['cluster'] === speakers[i-1]['cluster'])">
-        <div class="soundWave" [ngStyle]="{ 'width': (3*(speaker['To']-speaker['From']))+'vw' }">
+      <div>
+        <div class="soundWave" [ngStyle]="{ 'width': (6*(speaker['To']-speaker['From']))+'vw' }">
+           <p [ngStyle]="{ color: colors[speaker['cluster']] }">
+            speaker{{ speaker["cluster"] }}
+          </p>
           <div class="times">
             <div class="from">
-            <p class="from">From</p>
-            <p class="from">{{ speaker["From"] }}</p>
+            <p class="from">{{ speaker["From"] }}s</p>
             </div>
             <div class="to">
-              <p class="from">To</p>
-              <p class="to">{{ speaker["To"] }}</p>
+              <p class="to">{{ speaker["To"] }}s   |</p>
             </div>
           </div>
           <div id="bars">
@@ -70,9 +71,7 @@
               class="bar"
             ></div>
           </div>
-          <!-- <p [ngStyle]="{ color: colors[speaker['cluster']] }">
-            specker{{ speaker["cluster"] }}
-          </p> -->
+         
         </div>
         </div>
     </div>
