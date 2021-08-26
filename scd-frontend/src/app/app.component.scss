@@ -15,7 +15,7 @@ img{
 
 .spickersContainer{
     display: flex;
-    height: 55px;
+    height: 155px;
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
@@ -28,9 +28,15 @@ img{
 
 .soundWave{
     height: 70%;
-    width: 100%;
+    width: 10vw;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+}
+
+.times{
+    display: flex;
+    justify-content: space-around;
 }
 
 p{
@@ -42,13 +48,13 @@ p{
 #bars {
     height: 30px;
     position: relative;
-    width: 52px;
+    width: 100%;
+    display: flex;
 }
 
 .bar {
     height: 3px;
-    position: absolute;
-    width: 3px;      
+    width: 10%;      
     animation: sound 0ms -800ms linear infinite alternate;
 }
 

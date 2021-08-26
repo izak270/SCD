@@ -7,63 +7,75 @@
   <button (click)="startProcess()">first process</button>
   <button (click)="startSecondProcess()">second process</button>
   <div class="spickersContainer">
-    <div *ngFor="let speacker of speackers; let i = index" class="spescker">
-      <div class="soundWave">
-        <div id="bars">
-          <div
-            [ngStyle]="{ 'background-color': colors[speacker['cluster']] }"
-            class="bar"
-          ></div>
-          <div
-            [ngStyle]="{ 'background-color': colors[speacker['cluster']] }"
-            class="bar"
-          ></div>
-          <div
-            [ngStyle]="{ 'background-color': colors[speacker['cluster']] }"
-            class="bar"
-          ></div>
-          <div
-            [ngStyle]="{ 'background-color': colors[speacker['cluster']] }"
-            class="bar"
-          ></div>
-          <div
-            [ngStyle]="{ 'background-color': colors[speacker['cluster']] }"
-            class="bar"
-          ></div>
-          <div
-            [ngStyle]="{ 'background-color': colors[speacker['cluster']] }"
-            class="bar"
-          ></div>
-          <div
-            [ngStyle]="{ 'background-color': colors[speacker['cluster']] }"
-            class="bar"
-          ></div>
-          <div
-            [ngStyle]="{ 'background-color': colors[speacker['cluster']] }"
-            class="bar"
-          ></div>
-          <div
-            [ngStyle]="{ 'background-color': colors[speacker['cluster']] }"
-            class="bar"
-          ></div>
-          <div
-            [ngStyle]="{ 'background-color': colors[speacker['cluster']] }"
-            class="bar"
-          ></div>
-          <div
-            [ngStyle]="{ 'background-color': colors[speacker['cluster']] }"
-            class="bar"
-          ></div>
-          <div
-            [ngStyle]="{ 'background-color': colors[speacker['cluster']] }"
-            class="bar"
-          ></div>
+    <div  *ngFor="let speaker of speakers; let i = index"  class="spescker">
+      <div *ngIf="i>0&&!(speaker['cluster'] === speakers[i-1]['cluster'])">
+        <div class="soundWave" [ngStyle]="{ 'width': (3*(speaker['To']-speaker['From']))+'vw' }">
+          <div class="times">
+            <div class="from">
+            <p class="from">From</p>
+            <p class="from">{{ speaker["From"] }}</p>
+            </div>
+            <div class="to">
+              <p class="from">To</p>
+              <p class="to">{{ speaker["To"] }}</p>
+            </div>
+          </div>
+          <div id="bars">
+            <div
+              [ngStyle]="{ 'background-color': colors[speaker['cluster']] }"
+              class="bar"
+            ></div>
+            <div
+              [ngStyle]="{ 'background-color': colors[speaker['cluster']] }"
+              class="bar"
+            ></div>
+            <div
+              [ngStyle]="{ 'background-color': colors[speaker['cluster']] }"
+              class="bar"
+            ></div>
+            <div
+              [ngStyle]="{ 'background-color': colors[speaker['cluster']] }"
+              class="bar"
+            ></div>
+            <div
+              [ngStyle]="{ 'background-color': colors[speaker['cluster']] }"
+              class="bar"
+            ></div>
+            <div
+              [ngStyle]="{ 'background-color': colors[speaker['cluster']] }"
+              class="bar"
+            ></div>
+            <div
+              [ngStyle]="{ 'background-color': colors[speaker['cluster']] }"
+              class="bar"
+            ></div>
+            <div
+              [ngStyle]="{ 'background-color': colors[speaker['cluster']] }"
+              class="bar"
+            ></div>
+            <div
+              [ngStyle]="{ 'background-color': colors[speaker['cluster']] }"
+              class="bar"
+            ></div>
+            <div
+              [ngStyle]="{ 'background-color': colors[speaker['cluster']] }"
+              class="bar"
+            ></div>
+            <div
+              [ngStyle]="{ 'background-color': colors[speaker['cluster']] }"
+              class="bar"
+            ></div>
+            <div
+              [ngStyle]="{ 'background-color': colors[speaker['cluster']] }"
+              class="bar"
+            ></div>
+          </div>
+          <!-- <p [ngStyle]="{ color: colors[speaker['cluster']] }">
+            specker{{ speaker["cluster"] }}
+          </p> -->
         </div>
-      </div>
-      <p *ngIf = "speacker[0]" [ngStyle]="{ color: colors[speacker['cluster']] }">
-        specker{{ speacker["cluster"] }}
-      </p>
+        </div>
     </div>
-    <h1 *ngIf = "speackers[0]">Number of speackers {{ speackers[0]["clusters"] }}</h1>
+    <h1 *ngIf = "speakers[0]">Number of speakers {{ speakers[0]["clusters"] }}</h1>
   </div>
 </div>

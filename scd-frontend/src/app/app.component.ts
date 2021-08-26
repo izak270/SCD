@@ -35,79 +35,65 @@ export class AppComponent implements OnInit {
     '#33991A',
     '#6666FF',
   ];
-  public speackers: any = [ 
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 2 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 4 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 2 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 5 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 4 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 2 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 5 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 4 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 2 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 5 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 4 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 2 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 5 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 4 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 2 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 5 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 4 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 2 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 5 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 4 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 2 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 5 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 4 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 2 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 5 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 4 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 2 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 5 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 4 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 2 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 5 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
-    // { 0: 40.123, 1: 40.313, 2: Array(256), 'cluster': 1 },
+  public speakers: any = [ 
+    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+    { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
+    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+    { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
+    { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },
+    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+    { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
+    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+    { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
+    { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+    { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
+    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+    { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
+    { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+    { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
+    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+    { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
+    { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+    { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
+    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+    { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
+    { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+    { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
+    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+    { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
+    { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+    { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
+    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+    { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
+    { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+    { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
+    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+    { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
+    { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+    { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
+    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+    { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
+    { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },
+
   ];
   public files: any;
   constructor(private httpService: HttpService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+   this.speakers.forEach((element, index) => {
+      if(index>0&&this.speakers[index-1]['cluster']===element['cluster']){
+        element['From']=this.speakers[index-1]['From']
+        this.speakers.splice(index, 1);
+      }
+    });
+  }
   onFileSelected(target: any) {
     this.files = target.files;
     console.log(this.files);
     this.uploadFile(this.files);
   }
 
-  uploadFile(files: any) {
+  uploadFile(files) {
     console.log(typeof files['FileList']);
     const filelist = [];
     let formData: FormData = new FormData();
@@ -152,7 +138,7 @@ export class AppComponent implements OnInit {
     console.log('second');
     this.showLoader = true;
     this.httpService.PostSecondProcess().subscribe((response) => {
-      this.speackers = response;
+      this.speakers = response;
       console.log(response);
       this.httpService.getDataForDiagram().subscribe((ress) => {
         this.showLoader = false;
