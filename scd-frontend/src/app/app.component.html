@@ -4,14 +4,14 @@
   <img *ngIf="showLoader" src="../assets/loading.gif" alt="" />
   <button (click)="startPreprocess()">pre process</button>
 
-  <button (click)="startProcess()">first process</button>
-  <button (click)="startSecondProcess()">second process</button>
+  <button (click)="startProcess()">Speaker Change Detection</button>
+  <button (click)="startSecondProcess()">Speaker Diarization</button>
   <div class="spickersContainer">
     <div  *ngFor="let speaker of speakers; let i = index"  class="spescker">
       <div>
         <div class="soundWave" [ngStyle]="{ 'width': (6*(speaker['To']-speaker['From']))+'vw' }">
            <p [ngStyle]="{ color: colors[speaker['cluster']] }">
-            speaker{{ speaker["cluster"] }}
+            speaker {{ speaker["cluster"] }}
           </p>
           <div class="times">
             <div class="from">
