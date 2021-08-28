@@ -145,7 +145,7 @@ def create_vectors(df, file_name):
     index_label = 0
     wav_file = AudioSegment.from_wav(settings.PATH + WAV_PATH + file_name + ".interaction.wav")
     for i in range(size):
-      
+      print(str(i) + "out of: " + str(size))
       try:  
         if df.iloc[i]["Label"] == "Split":
           seg_start_first = df.iloc[index_label]["From"]
