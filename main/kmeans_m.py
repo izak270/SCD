@@ -24,8 +24,8 @@ def kmeans():
 
     print("Data frame length: " + str(len(gf3)))
 
-    if len(gf3) > 50:
-        k_rng = range(1, 50)
+    if len(gf3) > 20:
+        k_rng = range(1, 20)
     else:
         k_rng = range(1, len(gf3))
 
