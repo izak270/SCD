@@ -9,7 +9,7 @@
   <div class="spickersContainer">
     <div  *ngFor="let speaker of speakers; let i = index"  class="spescker">
       <div>
-        <div class="soundWave" [ngStyle]="{ 'width': (6*(speaker['To']-speaker['From']))+'vw' }">
+        <div class="soundWave" [ngStyle]="{ 'width': (6*(speaker['To']-speaker['From']))+'vw', 'min-width': '7vw'}" loading="lazy">
            <p [ngStyle]="{ color: colors[speaker['cluster']] }">
             speaker {{ speaker["cluster"] }}
           </p>
@@ -71,7 +71,7 @@
               class="bar"
             ></div>
           </div>
-         
+
         </div>
         </div>
     </div>

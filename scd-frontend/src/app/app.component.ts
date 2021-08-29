@@ -35,37 +35,37 @@ export class AppComponent implements OnInit {
     '#33991A',
     '#6666FF',
   ];
-  public speakers: any = [ 
-    { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
-    { "From": 44.313, "To": 45.313, 2: Array(256), 'cluster': 2 },    
-    { "From": 45.313, "To": 46.313, 2: Array(256), 'cluster': 2 },
-    { "From": 46.123, "To": 48.313, 2: Array(256), 'cluster': 1 },
-    { "From": 48.123, "To": 51.313, 2: Array(256), 'cluster': 4 },
-    { "From": 51.123, "To": 53.313, 2: Array(256), 'cluster': 2 },    
-    { "From": 53.123, "To": 55.313, 2: Array(256), 'cluster': 2 },
-    { "From": 55.123, "To": 57.313, 2: Array(256), 'cluster': 1 },
-    { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
-    { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },   
-    { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
-    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
-    { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
-    { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
-    { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
-    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
-    { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
-    { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
-    { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
-    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
-    { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
-    { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
-    { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
-    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
-    { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
-    { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
-    { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
-    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
-    { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 1 },
-    { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 1 },
+  public speakers: any = [
+//     { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
+//     { "From": 44.313, "To": 45.313, 2: Array(256), 'cluster': 2 },
+//     { "From": 45.313, "To": 46.313, 2: Array(256), 'cluster': 2 },
+//     { "From": 46.123, "To": 48.313, 2: Array(256), 'cluster': 1 },
+//     { "From": 48.123, "To": 51.313, 2: Array(256), 'cluster': 4 },
+//     { "From": 51.123, "To": 53.313, 2: Array(256), 'cluster': 2 },
+//     { "From": 53.123, "To": 55.313, 2: Array(256), 'cluster': 2 },
+//     { "From": 55.123, "To": 57.313, 2: Array(256), 'cluster': 1 },
+//     { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
+//     { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },
+//     { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
+//     { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+//     { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
+//     { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+//     { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
+//     { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+//     { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
+//     { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+//     { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
+//     { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+//     { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
+//     { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+//     { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
+//     { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+//     { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 4 },
+//     { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 2 },    { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+//     { "From": 40.123, "To": 42.313, 2: Array(256), 'cluster': 2 },
+//     { "From": 40.123, "To": 41.313, 2: Array(256), 'cluster': 1 },
+//     { "From": 40.123, "To": 44.313, 2: Array(256), 'cluster': 1 },
+//     { "From": 40.123, "To": 43.313, 2: Array(256), 'cluster': 1 },
 
   ];
   public files: any;
@@ -78,14 +78,14 @@ export class AppComponent implements OnInit {
         this.speakers[index]['From']=this.speakers[index-1]['From']
         this.speakers[index-1]=0
       }
-      
+
     });
     this.speakers=this.speakers.filter(item=>{
       console.log(item);
       return item != 0
     })
     console.log(this.speakers);
-    
+
   }
   onFileSelected(target: any) {
     this.files = target.files;
