@@ -15,9 +15,6 @@ export class AppComponent implements OnInit {
     '#FF6633',
     '#FFB399',
     '#FF33FF',
-    '#FFFF99',
-    '#00B3E6',
-    '#E6B333',
     '#3366E6',
     '#999966',
     '#99FF99',
@@ -74,19 +71,37 @@ export class AppComponent implements OnInit {
     const toSplice:any = []
    this.speakers.forEach((element, index) => {
       if(index>0&&this.speakers[index-1]['cluster']===element['cluster']){
-        console.log('for');
         this.speakers[index]['From']=this.speakers[index-1]['From']
         this.speakers[index-1]=0
       }
 
     });
     this.speakers=this.speakers.filter(item=>{
-      console.log(item);
       return item != 0
     })
-    console.log(this.speakers);
+    this.speakers.slice(0,20)
 
   }
+
+  connectSpeakers(){
+    console.log('connect')
+      const toSplice:any = []
+   this.speakers.forEach((element, index) => {
+      if(index>0&&this.speakers[index-1]['cluster']===element['cluster']){
+        this.speakers[index]['From']=this.speakers[index-1]['From']
+        this.speakers[index-1]=0
+      }
+
+    });
+    this.speakers=this.speakers.filter(item=>{
+      return item != 0
+    })
+    this.speakers = this.speakers.slice(0,20)
+
+    console.log(this.speakers);
+  }
+
+
   onFileSelected(target: any) {
     this.files = target.files;
     console.log(this.files);
@@ -138,6 +153,7 @@ export class AppComponent implements OnInit {
     this.showLoader = true;
     this.httpService.PostSecondProcess().subscribe((response) => {
       this.speakers = response;
+      this.connectSpeakers()
       console.log(response);
       this.httpService.getDataForDiagram().subscribe((ress) => {
         this.showLoader = false;
